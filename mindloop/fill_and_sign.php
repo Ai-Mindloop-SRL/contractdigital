@@ -255,6 +255,37 @@ $data_field = $field_map[$field['field_name']] ?? 'field_' . $field['field_name'
 <h1>✍️ Semnătură</h1>
 <p class="subtitle">Pasul 3: Semnați</p>
 <canvas id="signature-pad" width="600" height="200"></canvas>
+
+<!-- NIVEL 1 (SES+): Explicit Consent Checkboxes -->
+<div class="consent-section" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid <?=$primary_color?>;">
+<h3 style="margin: 0 0 15px 0; font-size: 16px; color: #333;">📋 Consimțământ Semnare Electronică</h3>
+<div style="margin-bottom: 12px;">
+<label style="display: flex; align-items: start; cursor: pointer; font-size: 14px;">
+<input type="checkbox" id="consent_read" name="consent_read" required style="margin-right: 10px; margin-top: 3px; width: 18px; height: 18px; cursor: pointer;">
+<span>Am citit și înțeles în totalitate termenii și condițiile acestui contract.</span>
+</label>
+</div>
+<div style="margin-bottom: 12px;">
+<label style="display: flex; align-items: start; cursor: pointer; font-size: 14px;">
+<input type="checkbox" id="consent_sign" name="consent_sign" required style="margin-right: 10px; margin-top: 3px; width: 18px; height: 18px; cursor: pointer;">
+<span>Sunt de acord să semnez acest contract prin mijloace electronice și accept că semnătura mea electronică are aceeași valoare juridică ca și o semnătură olografă.</span>
+</label>
+</div>
+<div style="margin-bottom: 0;">
+<label style="display: flex; align-items: start; cursor: pointer; font-size: 14px;">
+<input type="checkbox" id="consent_gdpr" name="consent_gdpr" required style="margin-right: 10px; margin-top: 3px; width: 18px; height: 18px; cursor: pointer;">
+<span>Sunt de acord cu procesarea datelor mele personale în conformitate cu <a href="https://www.dataprotection.ro/?page=Regulamentul_general_privind_protectia_datelor" target="_blank" style="color: <?=$primary_color?>; text-decoration: underline;">GDPR (Regulamentul UE 2016/679)</a> în scopul executării acestui contract.</span>
+</label>
+</div>
+</div>
+
+<!-- Hidden fields for NIVEL 1 data -->
+<input type="hidden" id="contract_hash" name="contract_hash" value="">
+<input type="hidden" id="user_agent" name="user_agent" value="">
+<input type="hidden" id="screen_resolution" name="screen_resolution" value="">
+<input type="hidden" id="timezone" name="timezone" value="">
+<input type="hidden" id="device_type" name="device_type" value="">
+
 <div class="signature-controls">
 <button type="button" class="btn btn-clear" id="clear-signature">🗑️ Șterge Semnătura</button>
 <button type="button" class="btn btn-primary" id="submit-contract" disabled>✅ ACCEPT ȘI SEMNEZ</button>
@@ -288,7 +319,8 @@ function draw(e){
     ctx.lineTo(x,y);
     ctx.stroke();
     hasSignature=true;
-    document.getElementById('submit-contract').disabled=false;
+    // NIVEL 1: Enable button only if signature AND all consents are checked
+    checkFormValidity();
 }
 function stopDrawing(e){
     if(isDrawing) e.preventDefault();
@@ -304,13 +336,73 @@ canvas.addEventListener('mouseout',stopDrawing);   // Additional safety for olde
 canvas.addEventListener('touchstart',startDrawing,{passive:false});
 canvas.addEventListener('touchmove',draw,{passive:false});
 canvas.addEventListener('touchend',stopDrawing,{passive:false});
-document.getElementById('clear-signature').addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);hasSignature=false;document.getElementById('submit-contract').disabled=true});
+// NIVEL 1: Function to check if form is valid (signature + all consents)
+function checkFormValidity() {
+    const consentRead = document.getElementById('consent_read').checked;
+    const consentSign = document.getElementById('consent_sign').checked;
+    const consentGdpr = document.getElementById('consent_gdpr').checked;
+    const allConsentsChecked = consentRead && consentSign && consentGdpr;
+    document.getElementById('submit-contract').disabled = !(hasSignature && allConsentsChecked);
+}
+
+// NIVEL 1: Listen to consent checkbox changes
+document.getElementById('consent_read').addEventListener('change', checkFormValidity);
+document.getElementById('consent_sign').addEventListener('change', checkFormValidity);
+document.getElementById('consent_gdpr').addEventListener('change', checkFormValidity);
+
+document.getElementById('clear-signature').addEventListener('click',()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hasSignature=false;
+    checkFormValidity();
+});
 
 document.getElementById('submit-contract').addEventListener('click',()=>{
-if(!hasSignature){alert('❌ Semnați!');return}
-document.getElementById('signature_data_input').value=canvas.toDataURL('image/png');
-localStorage.removeItem(STORAGE_KEY);
-document.getElementById('mainForm').submit()});
+    // NIVEL 1: Validate signature
+    if(!hasSignature){alert('❌ Vă rugăm să semnați mai întâi!');return}
+    
+    // NIVEL 1: Validate all consents
+    const consentRead = document.getElementById('consent_read').checked;
+    const consentSign = document.getElementById('consent_sign').checked;
+    const consentGdpr = document.getElementById('consent_gdpr').checked;
+    
+    if(!consentRead || !consentSign || !consentGdpr) {
+        alert('❌ Vă rugăm să bifați toate câmpurile de consimțământ!');
+        return;
+    }
+    
+    // NIVEL 1: Capture device data
+    document.getElementById('user_agent').value = navigator.userAgent;
+    document.getElementById('screen_resolution').value = screen.width + 'x' + screen.height;
+    document.getElementById('timezone').value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    
+    // Detect device type
+    const ua = navigator.userAgent.toLowerCase();
+    let deviceType = 'desktop';
+    if(/mobile|android|iphone|ipod|blackberry|iemobile|opera mini/i.test(ua)) deviceType = 'mobile';
+    else if(/ipad|tablet|playbook|silk/i.test(ua)) deviceType = 'tablet';
+    document.getElementById('device_type').value = deviceType;
+    
+    // NIVEL 1: Calculate contract hash (SHA-256 of preview HTML)
+    const contractContent = document.getElementById('contract-preview').innerHTML;
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(contractContent))
+        .then(hashBuffer => {
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            document.getElementById('contract_hash').value = hashHex;
+            
+            // Now submit the form
+            document.getElementById('signature_data_input').value=canvas.toDataURL('image/png');
+            localStorage.removeItem(STORAGE_KEY);
+            document.getElementById('mainForm').submit();
+        })
+        .catch(err => {
+            console.error('Hash calculation failed:', err);
+            // Fallback: submit without hash
+            document.getElementById('signature_data_input').value=canvas.toDataURL('image/png');
+            localStorage.removeItem(STORAGE_KEY);
+            document.getElementById('mainForm').submit();
+        });
+});
 
 const formFields=document.querySelectorAll('.contract-field');
 const previewDiv=document.getElementById('contract-preview');
