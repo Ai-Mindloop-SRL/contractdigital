@@ -96,20 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die('❌ Eroare generare număr contract: ' . $e->getMessage());
     }
     
-    $pdf_dir = __DIR__ . '/../uploads/contracts/';
-    if (!is_dir($pdf_dir)) mkdir($pdf_dir, 0755, true);
-    $pdf_filename = 'contract_' . $_POST['contract_id'] . '_' . time() . '.pdf';
-    
-    $pdf_generator = new ContractPDF_Mindloop();
-    $pdf_generator->generatePDF($contract_html, $pdf_dir . $pdf_filename, $_POST["signature_data"]);
-    
-    // ✅ Save PDF path AND filled contract_html (contract_content in DB) to database
-    $stmt = $conn->prepare("UPDATE contracts SET pdf_path = ?, contract_content = ? WHERE id = ?");
-    $pdf_path_db = "/uploads/contracts/" . $pdf_filename;
-    $stmt->bind_param("ssi", $pdf_path_db, $contract_html, $_POST["contract_id"]);
-    $stmt->execute();
-    
-    // NIVEL 1 (SES+): Insert signature data with consent and device info
+    // NIVEL 1 (SES+): Capture metadata BEFORE generating PDF
     error_log("NIVEL 1: Starting signature insert for contract " . $_POST['contract_id']);
     
     $consent_read = isset($_POST['consent_read']) && $_POST['consent_read'] == 'on' ? 1 : 0;
@@ -131,16 +118,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $consent_ip = $_SERVER['HTTP_CLIENT_IP'];
     }
     
-    // Calculate PDF hash
+    $signer_name = $contract['recipient_name'];
+    
+    // Generate PDF with NIVEL 1 metadata
+    $pdf_dir = __DIR__ . '/../uploads/contracts/';
+    if (!is_dir($pdf_dir)) mkdir($pdf_dir, 0755, true);
+    $pdf_filename = 'contract_' . $_POST['contract_id'] . '_' . time() . '.pdf';
+    
+    // Prepare NIVEL 1 data for PDF (without pdf_hash_after - will calculate after PDF generation)
+    $nivel1_data_for_pdf = array(
+        'signer_name' => $signer_name,
+        'signed_at' => date('Y-m-d H:i:s'),
+        'ip_address' => $consent_ip,
+        'user_agent' => $user_agent,
+        'device_type' => $device_type,
+        'screen_resolution' => $screen_resolution,
+        'timezone' => $timezone,
+        'contract_hash_before' => $contract_hash,
+        'consent_read' => $consent_read,
+        'consent_sign' => $consent_sign,
+        'consent_gdpr' => $consent_gdpr
+    );
+    
+    $pdf_generator = new ContractPDF_Mindloop();
+    $pdf_generator->generatePDF($contract_html, $pdf_dir . $pdf_filename, $_POST["signature_data"], $nivel1_data_for_pdf);
+    
+    // Calculate PDF hash AFTER generation
     $pdf_hash_after = hash_file('sha256', $pdf_dir . $pdf_filename);
+    
+    // ✅ Save PDF path AND filled contract_html (contract_content in DB) to database
+    $stmt = $conn->prepare("UPDATE contracts SET pdf_path = ?, contract_content = ? WHERE id = ?");
+    $pdf_path_db = "/uploads/contracts/" . $pdf_filename;
+    $stmt->bind_param("ssi", $pdf_path_db, $contract_html, $_POST["contract_id"]);
+    $stmt->execute();
     
     // Parse user agent
     $ua_parsed = json_encode([
         'raw' => $user_agent,
         'device' => $device_type ?: 'Unknown'
     ]);
-    
-    $signer_name = $contract['recipient_name'];
     
     // Insert into contract_signatures
     $stmt_sig = $conn->prepare("
