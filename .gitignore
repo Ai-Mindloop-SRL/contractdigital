@@ -1,0 +1,110 @@
+# ContractDigital Platform - .gitignore
+
+# ============================================
+# CONFIGURĂRI SENSIBILE (NU le pune pe GitHub!)
+# ============================================
+config/database.php
+config/email.php
+config/security.php
+config/ftp.php
+
+# Chei și parole
+*.key
+*.pem
+*.p12
+*.pfx
+secrets.txt
+credentials.txt
+
+# ============================================
+# FIȘIERE GENERATE
+# ============================================
+# PDF-uri contracte
+uploads/contracts/*.pdf
+uploads/signatures/*.png
+
+# Logs
+*.log
+error_log
+error_log.txt
+logs/*.log
+
+# Cache
+cache/
+tmp/
+temp/
+
+# ============================================
+# DEPENDINȚE (dacă folosiți Composer)
+# ============================================
+/vendor/
+composer.phar
+composer.lock
+
+# ============================================
+# IDE și Sisteme Operare
+# ============================================
+# PhpStorm / IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.nfs*
+
+# ============================================
+# BACKUP-URI LOCALE
+# ============================================
+backup/
+backups/
+*.backup
+*.bak
+*.old
+*_backup_*
+*_BACKUP_*
+*_old_*
+*_OLD_*
+
+# ============================================
+# FIȘIERE TEMPORARE PHP
+# ============================================
+*.swp
+*.swo
+*~
+.*.swp
+
+# ============================================
+# ALTE FIȘIERE SPECIFICE
+# ============================================
+# Node modules (dacă ai JavaScript build tools)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
