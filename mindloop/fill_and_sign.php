@@ -10,6 +10,7 @@ require_once __DIR__ . '/ContractPDF.php';
 $conn = getDBConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    error_log("🔍 NIVEL 1 DEBUG: POST received, signature_data=" . (empty($_POST['signature_data']) ? 'EMPTY' : 'OK'));
     if (empty($_POST['signature_data'])) die('❌ Semnați contractul');
     
     // Get contract and template
@@ -107,6 +108,85 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pdf_path_db = "/uploads/contracts/" . $pdf_filename;
     $stmt->bind_param("ssi", $pdf_path_db, $contract_html, $_POST["contract_id"]);
     $stmt->execute();
+    
+    // NIVEL 1 (SES+): Insert signature data with consent and device info
+    error_log("NIVEL 1: Starting signature insert for contract " . $_POST['contract_id']);
+    
+    $consent_read = isset($_POST['consent_read']) && $_POST['consent_read'] == 'on' ? 1 : 0;
+    $consent_sign = isset($_POST['consent_sign']) && $_POST['consent_sign'] == 'on' ? 1 : 0;
+    $consent_gdpr = isset($_POST['consent_gdpr']) && $_POST['consent_gdpr'] == 'on' ? 1 : 0;
+    $consent_given = ($consent_read && $consent_sign && $consent_gdpr) ? 1 : 0;
+    
+    $contract_hash = isset($_POST['contract_hash']) ? $_POST['contract_hash'] : null;
+    $user_agent = isset($_POST['user_agent']) ? $_POST['user_agent'] : $_SERVER['HTTP_USER_AGENT'];
+    $screen_resolution = isset($_POST['screen_resolution']) ? $_POST['screen_resolution'] : null;
+    $timezone = isset($_POST['timezone']) ? $_POST['timezone'] : null;
+    $device_type = isset($_POST['device_type']) ? $_POST['device_type'] : null;
+    
+    // Get client IP
+    $consent_ip = $_SERVER['REMOTE_ADDR'];
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $consent_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $consent_ip = $_SERVER['HTTP_CLIENT_IP'];
+    }
+    
+    // Calculate PDF hash
+    $pdf_hash_after = hash_file('sha256', $pdf_dir . $pdf_filename);
+    
+    // Parse user agent
+    $ua_parsed = json_encode([
+        'raw' => $user_agent,
+        'device' => $device_type ?: 'Unknown'
+    ]);
+    
+    $signer_name = $contract['recipient_name'];
+    
+    // Insert into contract_signatures
+    $stmt_sig = $conn->prepare("
+        INSERT INTO contract_signatures (
+            contract_id, signer_name, signed_at, ip_address, signature_data,
+            consent_given, consent_timestamp, consent_ip,
+            consent_read, consent_sign, consent_gdpr,
+            contract_hash_before, pdf_hash_after,
+            user_agent, user_agent_parsed,
+            screen_resolution, timezone, device_type
+        ) VALUES (
+            ?, ?, NOW(), ?, ?,
+            ?, NOW(), ?,
+            ?, ?, ?,
+            ?, ?,
+            ?, ?,
+            ?, ?, ?
+        )
+    ");
+    
+    $stmt_sig->bind_param(
+        "isissisiiissssss",
+        $_POST['contract_id'],
+        $signer_name,
+        $consent_ip,
+        $_POST['signature_data'],
+        $consent_given,
+        $consent_ip,
+        $consent_read,
+        $consent_sign,
+        $consent_gdpr,
+        $contract_hash,
+        $pdf_hash_after,
+        $user_agent,
+        $ua_parsed,
+        $screen_resolution,
+        $timezone,
+        $device_type
+    );
+    
+    if (!$stmt_sig->execute()) {
+        error_log("NIVEL 1 INSERT FAILED: " . $stmt_sig->error);
+    } else {
+        error_log("NIVEL 1 SUCCESS: Inserted for contract " . $_POST['contract_id']);
+    }
+    $stmt_sig->close();
     
     $stmt = $conn->prepare("SELECT recipient_email FROM contracts WHERE id = ?");
     $stmt->bind_param('i', $_POST['contract_id']);
