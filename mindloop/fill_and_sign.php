@@ -322,7 +322,6 @@ $data_field = $field_map[$field['field_name']] ?? 'field_' . $field['field_name'
 </div>
 <?php endforeach; ?>
 <button type="button" class="btn btn-reset" onclick="if(confirm('Ștergeți toate datele?')){localStorage.removeItem('contract_form_data_<?=$contract['id']?>');location.reload()}">🗑️ Șterge Date</button>
-</form>
 </div>
 
 <div class="card">
@@ -372,6 +371,7 @@ $data_field = $field_map[$field['field_name']] ?? 'field_' . $field['field_name'
 </div>
 </div>
 
+</form>
 </div>
 
 <script>
