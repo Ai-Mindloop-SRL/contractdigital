@@ -111,58 +111,57 @@ class ContractPDF_Mindloop extends TCPDF {
         $html = '
         <div style="font-family: DejaVu Sans, sans-serif; font-size: 10pt; line-height: 1.6;">
             <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: #f0f0f0; border-radius: 5px;">
-                <h2 style="margin: 0; color: #2c3e50; font-size: 14pt;">🔐 DETALII SEMNĂTURĂ ELECTRONICĂ</h2>
+                <h2 style="margin: 0; color: #2c3e50; font-size: 14pt;">DETALII SEMNATURA ELECTRONICA</h2>
                 <p style="margin: 5px 0 0 0; color: #7f8c8d; font-size: 9pt;">Metadate conform NIVEL 1 (SES+) - eIDAS/eSign Compliant</p>
             </div>
             
             <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
                 <tr>
-                    <td style="width: 40%; padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">✅ Data și ora semnării:</td>
+                    <td style="width: 40%; padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Data si ora semnarii:</td>
                     <td style="width: 60%; padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($signed_at_formatted) . '</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">👤 Semnatar:</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Semnatar:</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($data['signer_name'] ?? 'N/A') . '</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">🌐 Adresă IP:</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Adresa IP:</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($data['ip_address'] ?? 'N/A') . '</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">💻 Dispozitiv:</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Dispozitiv:</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($device_info) . '</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">🌍 Browser:</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Browser:</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($browser) . '</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">🕐 Fus orar:</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Fus orar:</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($data['timezone'] ?? 'N/A') . '</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">📐 Rezoluție ecran:</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; background: #f8f9fa; font-weight: bold;">Rezolutie ecran:</td>
                     <td style="padding: 8px; border: 1px solid #ddd;">' . htmlspecialchars($data['screen_resolution'] ?? 'N/A') . '</td>
                 </tr>
             </table>
             
             <div style="margin-bottom: 15px; padding: 12px; background: #e8f5e9; border-left: 4px solid #4caf50; border-radius: 3px;">
-                <h3 style="margin: 0 0 8px 0; color: #2e7d32; font-size: 11pt;">✓ Consimțământ Explicit (GDPR)</h3>
-                <p style="margin: 3px 0;">✓ Am citit și înțeles în totalitate termenii și condițiile contractului</p>
-                <p style="margin: 3px 0;">✓ Sunt de acord să semnez prin mijloace electronice (valoare juridică egală cu semnătura olografă)</p>
-                <p style="margin: 3px 0;">✓ Sunt de acord cu procesarea datelor personale conform GDPR (Regulamentul UE 2016/679)</p>
+                <h3 style="margin: 0 0 8px 0; color: #2e7d32; font-size: 11pt;">Consimtamant Explicit (GDPR)</h3>
+                <p style="margin: 3px 0;">[ X ] Am citit si inteles in totalitate termenii si conditiile contractului</p>
+                <p style="margin: 3px 0;">[ X ] Sunt de acord sa semnez prin mijloace electronice (valoare juridica egala cu semnatura olografa)</p>
+                <p style="margin: 3px 0;">[ X ] Sunt de acord cu procesarea datelor personale conform GDPR (Regulamentul UE 2016/679)</p>
             </div>
             
             <div style="margin-bottom: 15px; padding: 12px; background: #fff3e0; border-left: 4px solid #ff9800; border-radius: 3px;">
-                <h3 style="margin: 0 0 8px 0; color: #e65100; font-size: 11pt;">🔐 Integritate Document (SHA-256)</h3>
-                <p style="margin: 3px 0; font-size: 9pt;"><strong>Hash contract (înainte de semnare):</strong><br/><code style="font-family: monospace; font-size: 8pt;">' . htmlspecialchars($contract_hash) . '</code></p>
-                <p style="margin: 3px 0; font-size: 9pt;"><strong>Hash PDF final (după semnare):</strong><br/><code style="font-family: monospace; font-size: 8pt;">' . htmlspecialchars($pdf_hash) . '</code></p>
-                <p style="margin: 8px 0 0 0; font-size: 8pt; color: #666;"><em>Aceste hash-uri garantează că documentul nu a fost modificat după semnare. Orice modificare va genera un hash diferit.</em></p>
+                <h3 style="margin: 0 0 8px 0; color: #e65100; font-size: 11pt;">Integritate Document (SHA-256)</h3>
+                <p style="margin: 3px 0; font-size: 9pt;"><strong>Hash contract HTML (inainte de semnare):</strong><br/><span style="font-family: monospace; font-size: 8pt;">' . htmlspecialchars($contract_hash) . '</span></p>
+                <p style="margin: 8px 0 0 0; font-size: 8pt; color: #666;"><em>Nota: Hash-ul PDF-ului final este calculat dupa generare si salvat in baza de date. Orice modificare a documentului va genera un hash diferit, garantand integritatea continutului.</em></p>
             </div>
             
             <div style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 3px; text-align: center; font-size: 8pt; color: #666;">
-                <p style="margin: 0;"><strong>Semnătură Electronică Conformă:</strong> Regulament eIDAS (UE) Nr. 910/2014 | Legea 455/2001 (RO)</p>
-                <p style="margin: 5px 0 0 0;">Document generat de AI Mindloop Contract System | Hash-uri verificabile independent</p>
+                <p style="margin: 0;"><strong>Semnatura Electronica Conforma:</strong> Regulament eIDAS (UE) Nr. 910/2014 | Legea 455/2001 (RO)</p>
+                <p style="margin: 5px 0 0 0;">Document generat de AI Mindloop Contract System | Hash-uri verificabile in baza de date</p>
             </div>
         </div>
         ';
