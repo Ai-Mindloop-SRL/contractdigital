@@ -119,16 +119,18 @@ $pdf_content = $pdf_obj->Output('', 'S');
         $pdf_hash_after = hash('sha256', $pdf_content);
         
         // Insert into contract_signatures table
+        $signer_name = $contract['recipient_name']; // Get signer name from contract
+        
         $stmt_sig = $conn->prepare("
             INSERT INTO contract_signatures (
-                contract_id, signed_at, ip_address, signature_data,
+                contract_id, signer_name, signed_at, ip_address, signature_data,
                 consent_given, consent_timestamp, consent_ip,
                 consent_read, consent_sign, consent_gdpr,
                 contract_hash_before, pdf_hash_after,
                 user_agent, user_agent_parsed,
                 screen_resolution, timezone, device_type
             ) VALUES (
-                ?, NOW(), ?, ?,
+                ?, ?, NOW(), ?, ?,
                 ?, NOW(), ?,
                 ?, ?, ?,
                 ?, ?,
@@ -138,8 +140,9 @@ $pdf_content = $pdf_obj->Output('', 'S');
         ");
         
         $stmt_sig->bind_param(
-            "issisiiissssss",
+            "isissisiiissssss",
             $contract['id'],              // contract_id
+            $signer_name,                 // signer_name
             $consent_ip,                  // ip_address
             $signature_data,              // signature_data
             $consent_given,               // consent_given
