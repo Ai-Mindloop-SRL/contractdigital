@@ -88,6 +88,7 @@ $pdf_content = $pdf_obj->Output('', 'S');
         $stmt->close();
         
         // NIVEL 1 (SES+): Insert signature data with consent and device info
+        error_log("NIVEL 1 DEBUG: Starting signature insert for contract " . $contract['id']);
         $consent_read = isset($_POST['consent_read']) && $_POST['consent_read'] == 'on' ? 1 : 0;
         $consent_sign = isset($_POST['consent_sign']) && $_POST['consent_sign'] == 'on' ? 1 : 0;
         $consent_gdpr = isset($_POST['consent_gdpr']) && $_POST['consent_gdpr'] == 'on' ? 1 : 0;
