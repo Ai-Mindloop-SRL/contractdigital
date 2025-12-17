@@ -10,6 +10,7 @@ require_once __DIR__ . '/ContractPDF.php';
 $conn = getDBConnection();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    error_log("🔍 NIVEL 1 DEBUG: POST received, signature_data=" . (empty($_POST['signature_data']) ? 'EMPTY' : 'OK'));
     if (empty($_POST['signature_data'])) die('❌ Semnați contractul');
     
     // Get contract and template
@@ -112,9 +113,54 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $pdf_dir = __DIR__ . '/../uploads/contracts/';
     if (!is_dir($pdf_dir)) mkdir($pdf_dir, 0755, true);
     $pdf_filename = 'contract_' . $_POST['contract_id'] . '_' . time() . '.pdf';
+    // NIVEL 1 (SES+): Capture metadata BEFORE generating PDF
+    error_log("NIVEL 1: Starting signature insert for contract " . $_POST['contract_id']);
     
-    $pdf_generator = new ContractPDF_Mindloop();
-    $pdf_generator->generatePDF($contract_html, $pdf_dir . $pdf_filename, $_POST["signature_data"]);
+    $consent_read = isset($_POST['consent_read']) && $_POST['consent_read'] == 'on' ? 1 : 0;
+    $consent_sign = isset($_POST['consent_sign']) && $_POST['consent_sign'] == 'on' ? 1 : 0;
+    $consent_gdpr = isset($_POST['consent_gdpr']) && $_POST['consent_gdpr'] == 'on' ? 1 : 0;
+    $consent_given = ($consent_read && $consent_sign && $consent_gdpr) ? 1 : 0;
+    
+    $contract_hash = isset($_POST['contract_hash']) ? $_POST['contract_hash'] : null;
+    $user_agent = isset($_POST['user_agent']) ? $_POST['user_agent'] : $_SERVER['HTTP_USER_AGENT'];
+    $screen_resolution = isset($_POST['screen_resolution']) ? $_POST['screen_resolution'] : null;
+    $timezone = isset($_POST['timezone']) ? $_POST['timezone'] : null;
+    $device_type = isset($_POST['device_type']) ? $_POST['device_type'] : null;
+    
+    // Get client IP
+    $consent_ip = $_SERVER['REMOTE_ADDR'];
+    if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $consent_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $consent_ip = $_SERVER['HTTP_CLIENT_IP'];
+    }
+    
+    $signer_name = $contract['recipient_name'];
+    
+    // Generate PDF with NIVEL 1 metadata
+
+
+    
+    $pdf_generator = new ContractPDF_RoseUp();
+    // Prepare NIVEL 1 data for PDF (without pdf_hash_after - will calculate after PDF generation)
+    $nivel1_data_for_pdf = array(
+        'signer_name' => $signer_name,
+        'signed_at' => date('Y-m-d H:i:s'),
+        'ip_address' => $consent_ip,
+        'user_agent' => $user_agent,
+        'device_type' => $device_type,
+        'screen_resolution' => $screen_resolution,
+        'timezone' => $timezone,
+        'contract_hash_before' => $contract_hash,
+        'consent_read' => $consent_read,
+        'consent_sign' => $consent_sign,
+        'consent_gdpr' => $consent_gdpr
+    );
+    
+    $pdf_generator->generatePDF($contract_html, $pdf_dir . $pdf_filename, $_POST["signature_data"], $nivel1_data_for_pdf);
+    
+    // Calculate PDF hash AFTER generation
+    $pdf_hash_after = hash_file('sha256', $pdf_dir . $pdf_filename);
     
     // ✅ Save PDF path AND filled contract_html (contract_content in DB) to database
     $stmt = $conn->prepare("UPDATE contracts SET pdf_path = ?, contract_content = ? WHERE id = ?");
@@ -122,6 +168,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bind_param("ssi", $pdf_path_db, $contract_html, $_POST["contract_id"]);
     $stmt->execute();
     
+    
+    // Parse user agent
+    $ua_parsed = json_encode([
+        'raw' => $user_agent,
+        'device' => $device_type ?: 'Unknown'
+    ]);
+    
+    // Insert into contract_signatures
+    $stmt_sig = $conn->prepare("
+        INSERT INTO contract_signatures (
+            contract_id, signer_name, signed_at, ip_address, signature_data,
+            consent_given, consent_timestamp, consent_ip,
+            consent_read, consent_sign, consent_gdpr,
+            contract_hash_before, pdf_hash_after,
+            user_agent, user_agent_parsed,
+            screen_resolution, timezone, device_type
+        ) VALUES (
+            ?, ?, NOW(), ?, ?,
+            ?, NOW(), ?,
+            ?, ?, ?,
+            ?, ?,
+            ?, ?,
+            ?, ?, ?
+        )
+    ");
+    
+    $stmt_sig->bind_param(
+        "isissisiiissssss",
+        $_POST['contract_id'],
+        $signer_name,
+        $consent_ip,
+        $_POST['signature_data'],
+        $consent_given,
+        $consent_ip,
+        $consent_read,
+        $consent_sign,
+        $consent_gdpr,
+        $contract_hash,
+        $pdf_hash_after,
+        $user_agent,
+        $ua_parsed,
+        $screen_resolution,
+        $timezone,
+        $device_type
+    );
+    
+    if (!$stmt_sig->execute()) {
+        error_log("NIVEL 1 INSERT FAILED: " . $stmt_sig->error);
+    } else {
+        error_log("NIVEL 1 SUCCESS: Inserted for contract " . $_POST['contract_id']);
+    }
+    $stmt_sig->close();
+
     $stmt = $conn->prepare("SELECT recipient_email FROM contracts WHERE id = ?");
     $stmt->bind_param('i', $_POST['contract_id']);
     $stmt->execute();
@@ -275,6 +374,37 @@ $readonly_attr = ($is_admin_only && !empty($preset_value)) ? 'readonly' : '';
 <h1>✍️ Semnătură</h1>
 <p class="subtitle">Pasul 3: Semnați</p>
 <canvas id="signature-pad" width="600" height="200"></canvas>
+
+<!-- NIVEL 1 (SES+): Explicit Consent Checkboxes -->
+<div class="consent-section" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid <?=$primary_color?>;">
+<h3 style="margin: 0 0 15px 0; font-size: 16px; color: #333;">📋 Consimțământ Semnare Electronică</h3>
+<div style="margin-bottom: 12px;">
+<label style="display: flex; align-items: start; cursor: pointer; font-size: 14px;">
+<input type="checkbox" id="consent_read" name="consent_read" required style="margin-right: 10px; margin-top: 3px; width: 18px; height: 18px; cursor: pointer;">
+<span>Am citit și înțeles în totalitate termenii și condițiile acestui contract.</span>
+</label>
+</div>
+<div style="margin-bottom: 12px;">
+<label style="display: flex; align-items: start; cursor: pointer; font-size: 14px;">
+<input type="checkbox" id="consent_sign" name="consent_sign" required style="margin-right: 10px; margin-top: 3px; width: 18px; height: 18px; cursor: pointer;">
+<span>Sunt de acord să semnez acest contract prin mijloace electronice și accept că semnătura mea electronică are aceeași valoare juridică ca și o semnătură olografă.</span>
+</label>
+</div>
+<div style="margin-bottom: 0;">
+<label style="display: flex; align-items: start; cursor: pointer; font-size: 14px;">
+<input type="checkbox" id="consent_gdpr" name="consent_gdpr" required style="margin-right: 10px; margin-top: 3px; width: 18px; height: 18px; cursor: pointer;">
+<span>Sunt de acord cu procesarea datelor mele personale în conformitate cu <a href="https://www.dataprotection.ro/?page=Regulamentul_general_privind_protectia_datelor" target="_blank" style="color: <?=$primary_color?>; text-decoration: underline;">GDPR (Regulamentul UE 2016/679)</a> în scopul executării acestui contract.</span>
+</label>
+</div>
+</div>
+
+<!-- Hidden fields for NIVEL 1 data -->
+<input type="hidden" id="contract_hash" name="contract_hash" value="">
+<input type="hidden" id="user_agent" name="user_agent" value="">
+<input type="hidden" id="screen_resolution" name="screen_resolution" value="">
+<input type="hidden" id="timezone" name="timezone" value="">
+<input type="hidden" id="device_type" name="device_type" value="">
+
 <div class="signature-controls">
 <button type="button" class="btn btn-clear" id="clear-signature">🗑️ Șterge Semnătura</button>
 <button type="button" class="btn btn-primary" id="submit-contract" disabled>✅ ACCEPT ȘI SEMNEZ</button>
@@ -324,6 +454,12 @@ canvas.addEventListener('mouseout',stopDrawing);   // Additional safety for olde
 canvas.addEventListener('touchstart',startDrawing,{passive:false});
 canvas.addEventListener('touchmove',draw,{passive:false});
 canvas.addEventListener('touchend',stopDrawing,{passive:false});
+
+// NIVEL 1: Add consent checkbox listeners
+document.getElementById('consent_read').addEventListener('change', checkFormValidity);
+document.getElementById('consent_sign').addEventListener('change', checkFormValidity);
+document.getElementById('consent_gdpr').addEventListener('change', checkFormValidity);
+
 document.getElementById('clear-signature').addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);hasSignature=false;document.getElementById('submit-contract').disabled=true});
 
 document.getElementById('submit-contract').addEventListener('click',()=>{
