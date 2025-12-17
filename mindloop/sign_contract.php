@@ -159,7 +159,14 @@ $pdf_content = $pdf_obj->Output('', 'S');
             $device_type                  // device_type
         );
         
-        $stmt_sig->execute();
+        if (!$stmt_sig->execute()) {
+            error_log("NIVEL 1 INSERT FAILED: " . $stmt_sig->error);
+            error_log("Contract ID: " . $contract['id']);
+            error_log("Signer name: " . $signer_name);
+            // Continue anyway - don't block contract signing
+        } else {
+            error_log("NIVEL 1 SUCCESS: Inserted signature for contract " . $contract['id']);
+        }
         $stmt_sig->close();
         
         // Send email with PDF to client AND office@splm.ro (CC)
