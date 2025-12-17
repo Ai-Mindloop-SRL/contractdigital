@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Contract de Prestări Servicii</title>
+    <style>
+        body {
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header-info {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header-info h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #2c5aa0;
+            border-bottom: 2px solid #2c5aa0;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        .party-info {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #2c5aa0;
+        }
+        .party-title {
+            font-weight: bold;
+            font-size: 18px;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        .article-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2c5aa0;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        .service-box {
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .service-box h3 {
+            color: #2c5aa0;
+            margin-top: 0;
+        }
+        .service-box h4 {
+            color: #555;
+            margin: 10px 0;
+        }
+        .price-highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .important-clause {
+            background: #ffebee;
+            padding: 15px;
+            border-left: 4px solid #f44336;
+            margin: 20px 0;
+        }
+        .important-clause h4 {
+            color: #c62828;
+            margin-top: 0;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 25px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .signature-section {
+            display: table;
+            width: 100%;
+            margin-top: 50px;
+        }
+        .signature-left,
+        .signature-right {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 10px;
+        }
+        .signature-box {
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-info">
+        <h1>📄 CONTRACT DE PRESTĂRI SERVICII</h1>
+        <p><strong>Nr. Contract:</strong> ____________</p>
+        <p><strong>Data:</strong> ____________</p>
+    </div>
+
+    <h2>🏢 PĂRȚILE CONTRACTANTE</h2>
+
+    <div class="party-info">
+        <div class="party-title">👨‍💼 PRESTATOR:</div>
+        <p><strong>AI MINDLOOP SRL</strong></p>
+        <p>📍 <strong>Sediu:</strong> Str. Fabricii nr. 16, Timișoara, Timiș</p>
+        <p>🔢 <strong>CUI:</strong> RO50036700</p>
+        <p>🏦 <strong>Nr. Reg. Com.:</strong> J35/1894/2024</p>
+        <p>💳 <strong>Cont bancar:</strong> RO73BTRLRONCRT0734451301, BCR</p>
+        <p>📧 <strong>Email:</strong> office@aimindloop.com</p>
+        <p>📞 <strong>Telefon:</strong> 0754 270 456</p>
+        <p><strong>Reprezentată de:</strong> MOCOFAN DRAGOȘ-CRISTIAN, Administrator</p>
+    </div>
+
+    <div class="party-info">
+        <div class="party-title">👤 BENEFICIAR:</div>
+        <p><strong>{{company_name}}</strong></p>
+        <p>🔢 <strong>CUI:</strong> {{cui}}</p>
+        <p>🏦 <strong>Nr. Reg. Com.:</strong> {{reg_com}}</p>
+        <p>📍 <strong>Adresă:</strong> {{address}}</p>
+        <p>📧 <strong>Email:</strong> {{email}}</p>
+        <p>📞 <strong>Telefon:</strong> {{phone}}</p>
+        <p>💳 <strong>Cont bancar:</strong> {{bank_account}}</p>
+        <p><strong>Reprezentată de:</strong> {{legal_representative}}, {{position}}</p>
+    </div>
+
+    <h2>📋 OBIECTUL CONTRACTULUI</h2>
+    <p><strong>PRESTATORUL</strong> se obligă să presteze în favoarea <strong>BENEFICIARULUI</strong> serviciile de <strong>consultanță, dezvoltare și implementare sisteme AI, dezvoltare software, creare website și aplicații web personalizate</strong>, conform condițiilor specificate în prezentul contract.</p>
+
+    <h2>💼 SERVICIILE PRESTATE</h2>
+
+    <div class="service-box">
+        <h3>🚀 SERVICIUL 1 - ONBOARDING & ANALIZĂ INIȚIALĂ</h3>
+        <h4>📋 Descriere:</h4>
+        <ul>
+            <li>✅ Sesiuni de onboarding cu echipa clientului</li>
+            <li>✅ Analiza proceselor actuale de business</li>
+            <li>✅ Identificarea oportunităților de automatizare prin AI</li>
+            <li>✅ Definirea cerințelor tehnice și funcționale</li>
+            <li>✅ Crearea roadmap-ului de implementare</li>
+        </ul>
+        <div class="price-highlight">
+            💰 PREȚ: 400 EUR + TVA (ONE TIME)
+        </div>
+    </div>
+
+    <div class="service-box">
+        <h3>🌐 SERVICIUL 2 - DEZVOLTARE WEBSITE & APLICAȚII</h3>
+        <h4>📋 Descriere:</h4>
+        <ul>
+            <li>✅ Design UI/UX modern și responsive</li>
+            <li>✅ Dezvoltare front-end (HTML, CSS, JavaScript, React/Vue)</li>
+            <li>✅ Dezvoltare back-end (PHP, Node.js, Python)</li>
+            <li>✅ Integrare baze de date (MySQL, PostgreSQL)</li>
+            <li>✅ Implementare funcționalități personalizate</li>
+            <li>✅ Optimizare SEO</li>
+            <li>✅ Testing și debugging</li>
+        </ul>
+        <div class="price-highlight">
+            💰 PREȚ: 1,800 EUR + TVA (ONE TIME)
+        </div>
+    </div>
+
+    <div class="service-box">
+        <h3>🤖 SERVICIUL 3 - INTEGRARE AI & AUTOMATIZĂRI</h3>
+        <h4>📋 Descriere:</h4>
+        <ul>
+            <li>✅ Integrare API-uri AI (OpenAI, Claude, Gemini)</li>
+            <li>✅ Chatbots inteligenti cu context business</li>
+            <li>✅ Sisteme de procesare documente (OCR, NLP)</li>
+            <li>✅ Automatizări workflow-uri</li>
+            <li>✅ Integrări cu sisteme existente (CRM, ERP)</li>
+        </ul>
+        <h4>💡 Include:</h4>
+        <ul>
+            <li>🔧 Configurare inițială</li>
+            <li>📚 Training și documentație</li>
+            <li>🆘 Suport tehnic 3 luni</li>
+        </ul>
+        <div class="price-highlight">
+            💰 PREȚ ONE TIME: 300 EUR + TVA (pentru configurare inițială)<br>
+            💰 PREȚ LUNAR: 300 EUR + TVA (mentenanță, suport, îmbunătățiri)
+        </div>
+    </div>
+
+    <div class="price-highlight" style="font-size: 18px; margin-top: 30px;">
+        <strong>📊 TOTAL ONE TIME:</strong> 2,200 EUR + TVA<br>
+        <strong>📊 TOTAL LUNAR:</strong> 300 EUR + TVA
+    </div>
+
+    <h2>💳 MODALITĂȚI DE PLATĂ</h2>
+    <div class="article-title">Art. 4 - Plăți</div>
+    <ul>
+        <li>💰 <strong>Avans 50%</strong>: 1,100 EUR + TVA la semnarea contractului</li>
+        <li>💰 <strong>Restul 50%</strong>: 1,100 EUR + TVA la finalizarea proiectului</li>
+        <li>💰 <strong>Plăți lunare</strong>: 300 EUR + TVA, în prima zi a fiecărei luni</li>
+        <li>⏰ <strong>Termen de plată</strong>: 5 zile lucrătoare de la emiterea facturii</li>
+    </ul>
+
+    <h2>⏳ DURATA CONTRACTULUI</h2>
+    <div class="article-title">Art. 5 - Durată</div>
+    <ul>
+        <li>📅 Durata: <strong>12 luni</strong> de la semnare</li>
+        <li>🔄 Reînnoire automată cu acordul ambelor părți</li>
+        <li>❌ Reziliere: cu <strong>30 zile</strong> preaviz în scris</li>
+    </ul>
+
+    <div class="important-clause">
+        <h4>⚠️ CLAUZĂ REZILIERE FLEXIBILĂ</h4>
+        <p>Contractul poate fi reziliat fără penalizări de către oricare dintre părți cu un preaviz scris de <strong>30 de zile calendaristice</strong>. În cazul rezilierii, beneficiarul va achita doar serviciile deja prestate și confirmate până la data rezilierii.</p>
+    </div>
+
+    <h2>📜 OBLIGAȚIILE PĂRȚILOR</h2>
+    <div class="article-title">Art. 6 - Obligațiile PRESTATORULUI</div>
+    <ul>
+        <li>✅ Să execute serviciile conform specificațiilor agreate</li>
+        <li>✅ Să respecte termenele stabilite</li>
+        <li>✅ Să asigure suport tehnic conform contractului</li>
+        <li>✅ Să asigure confidențialitatea datelor clientului</li>
+    </ul>
+
+    <div class="article-title">Art. 7 - Obligațiile BENEFICIARULUI</div>
+    <ul>
+        <li>✅ Să furnizeze informațiile necesare implementării</li>
+        <li>✅ Să efectueze plățile la termen</li>
+        <li>✅ Să desemneze o persoană de contact</li>
+        <li>✅ Să asigure acces la sistemele necesare</li>
+    </ul>
+
+    <h2>🔒 CONFIDENȚIALITATE & GDPR</h2>
+    <div class="article-title">Art. 8 - Protecția Datelor</div>
+    <ul>
+        <li>🔐 Ambele părți se obligă să protejeze datele personale conform GDPR</li>
+        <li>🔐 Informațiile confidențiale nu vor fi dezvăluite terților</li>
+        <li>🔐 Datele vor fi folosite exclusiv pentru executarea contractului</li>
+    </ul>
+
+    <h2>⚖️ CLAUZE FINALE</h2>
+    <div class="article-title">Art. 9 - Forță Majoră</div>
+    <p>Părțile nu răspund pentru neexecutarea obligațiilor contractuale în cazul evenimentelor de forță majoră.</p>
+
+    <div class="article-title">Art. 10 - Litigii</div>
+    <p>Orice litigiu va fi soluționat pe cale amiabilă. În caz contrar, litigiile vor fi soluționate de instanțele judecătorești competente.</p>
+
+    <div class="article-title">Art. 11 - Modificări</div>
+    <p>Modificările contractului se fac prin act adițional semnat de ambele părți.</p>
+
+    <h2>✍️ SEMNĂTURI</h2>
+    <div class="signature-section">
+        <div class="signature-left">
+            <strong>PRESTATOR</strong><br>
+            <strong>AI MINDLOOP SRL</strong><br>
+            Reprezentant legal: MOCOFAN DRAGOȘ-CRISTIAN
+            <div class="signature-box">
+                Semnătură: ________________
+            </div>
+        </div>
+        <div class="signature-right">
+            <strong>BENEFICIAR</strong><br>
+            <strong>{{company_name}}</strong><br>
+            Reprezentant legal: {{legal_representative}}
+            <div class="signature-box">
+                Semnătură: ________________
+            </div>
+        </div>
+    </div>
+</body>
+</html>

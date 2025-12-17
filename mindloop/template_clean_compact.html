@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Contract de Prestări Servicii</title>
+    <style>
+        body {
+            font-family: 'DejaVu Sans', Arial, sans-serif;
+            line-height: 1.4;
+            color: #000;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
+            font-size: 11px;
+        }
+        .header-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header-info h1 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        h2 {
+            font-size: 14px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        h3 {
+            font-size: 12px;
+            margin-top: 15px;
+            margin-bottom: 6px;
+        }
+        h4 {
+            font-size: 11px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        p {
+            margin: 6px 0;
+        }
+        ul {
+            margin: 6px 0;
+            padding-left: 20px;
+        }
+        li {
+            margin: 3px 0;
+        }
+        .party-info {
+            margin: 10px 0;
+            padding: 8px;
+        }
+        .party-title {
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .signature-section {
+            display: table;
+            width: 100%;
+            margin-top: 30px;
+        }
+        .signature-left,
+        .signature-right {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+            padding: 5px;
+        }
+        .signature-box {
+            height: 50px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-info">
+        <h1>CONTRACT DE PRESTĂRI SERVICII</h1>
+        <p>Nr <span data-field="field_numar_contract">[NUMAR_CONTRACT]</span> / Data: <span data-field="field_data_contract">[DATA_CONTRACT]</span></p>
+    </div>
+
+    <h2>PĂRȚILE CONTRACTANTE</h2>
+
+    <div class="party-info">
+        <div class="party-title">PRESTATOR:</div>
+        <p>
+            <strong>AI MINDLOOP SRL</strong><br>
+            CUI: 41458014, Nr. Reg. Com: J20/902/2019<br>
+            Adresă: Str. Tudor Vladimirescu nr. 28A, Et. Mansardă, Cam. 1, Constanța, Județul Constanța, Cod 900728<br>
+            Telefon: 0726327192, Email: office@mindloop.ro, Website: MINDLOOP.RO<br>
+            Cont bancar: RO07 INGB 0000 9999 1228 8357 (ING Bank)<br>
+            Reprezentant legal: Motoi Ionut Dorel, Administrator
+        </p>
+    </div>
+
+    <div class="party-info">
+        <div class="party-title">CLIENT:</div>
+        <p>
+            Denumire: <span data-field="field_nume_firma">[NUME_FIRMA]</span>, 
+            CUI: <span data-field="field_cui">[CUI]</span>, 
+            Nr. Reg. Com: <span data-field="field_reg_com">[REG_COM]</span><br>
+            Adresă: <span data-field="field_adresa">[ADRESA]</span><br>
+            Email: <span data-field="field_email">[EMAIL]</span>, 
+            Telefon: <span data-field="field_telefon">[TELEFON]</span><br>
+            Cont bancar: <span data-field="field_cont_bancar">[CONT_BANCAR]</span><br>
+            Reprezentant legal: <span data-field="field_reprezentant">[REPREZENTANT]</span>, <span data-field="field_functie">[FUNCTIE]</span>
+        </p>
+    </div>
+
+    <h2>Art. 1 - OBIECTUL CONTRACTULUI</h2>
+    <p>Prestarea următoarelor servicii:</p>
+
+    <h3>1.1 SERVICIUL 1 - ONBOARDING & ANALIZĂ INIȚIALĂ</h3>
+    <h4>Pachet: Preluare Website în Portofoliu</h4>
+    <p><strong>Ce include:</strong></p>
+    <ul>
+        <li>Audit tehnic complet website - analiză performanță, viteză încărcare, securitate</li>
+        <li>Analiză SEO detaliată - poziționare actuală, oportunități de îmbunătățire, analiza competitorilor</li>
+        <li>Brand audit - înțelegerea identității vizuale, mesajului și valorilor</li>
+        <li>Evaluare UX/UI - experiența utilizatorilor pe website</li>
+        <li>Raport complet de recomandări - roadmap strategică pentru optimizări</li>
+        <li>Setup infrastructură de lucru - acces, backup-uri, documentație tehnică</li>
+    </ul>
+    <p><strong>Preț: 400 EUR + TVA (ONE TIME)</strong></p>
+
+    <h3>1.2 SERVICIUL 2 - SUPORT & DEZVOLTARE WEBSITE</h3>
+    <h4>Pachet: Maintenance & Development Lunar</h4>
+    <p><strong>Resurse incluse:</strong></p>
+    <ul>
+        <li>3 ore/lună de lucru dedicat</li>
+        <li>Modificări de design - ajustări vizuale, update layout, optimizare responsive</li>
+        <li>Actualizări de conținut - texte, imagini, portofoliu proiecte noi</li>
+        <li>Dezvoltări tehnice - funcționalități noi, integrări, optimizări</li>
+        <li>Bug fixing - rezolvare probleme tehnice</li>
+        <li>Raport lunar - activități realizate și recomandări</li>
+    </ul>
+    <p><strong>Tarif orar pentru ore suplimentare:</strong> 40 EUR/oră + TVA (cu estimare prealabilă obligatorie)</p>
+    <p><strong>Preț: 150 EUR + TVA/lună</strong></p>
+
+    <h3>1.3 SERVICIUL 3 - AUTOMATIZARE SOCIAL MEDIA LINKEDIN</h3>
+    <h4>Pachet: AI-Powered Social Media Management</h4>
+    <p><strong>A. Configurare GPT Custom Brand Agent:</strong></p>
+    <ul>
+        <li>AI personalizat - antrenat cu informații despre companie, servicii, proiecte, valori</li>
+        <li>Knowledge base - standard-uri internaționale, industria specifică</li>
+        <li>Tone of voice - profesional, tehnic, autoritativ</li>
+        <li>Web scraping integrat - monitorizare automatizată news, tehnologii noi</li>
+        <li>Surse credibile - publicații de specialitate</li>
+    </ul>
+    <p><strong>B. Automatizare & Publicare:</strong></p>
+    <ul>
+        <li>Workflow complet automatizat - generare conținut → aprobare → publicare LinkedIn</li>
+        <li>Sistem de aprobare flexibil - prin email/dashboard web</li>
+        <li>Frecvență personalizabilă - 1-3 postări/săptămână</li>
+        <li>Conținut diversificat: prezentări proiecte, insights tehnice, update-uri, achievements</li>
+    </ul>
+    <p><strong>C. Caracteristici avansate:</strong></p>
+    <ul>
+        <li>Optimizare SEO LinkedIn - hashtag-uri relevante, keywords, engagement triggers</li>
+        <li>Multi-language support - română/engleză</li>
+        <li>Analytics & reporting - performanță postări, engagement, reach</li>
+        <li>Continuous learning - sistemul învață din feedback</li>
+    </ul>
+    <p><strong>Preț: 1.800 EUR + TVA (ONE TIME) + 150 EUR + TVA/lună suport</strong></p>
+
+    <h2>Art. 2 - VALOAREA CONTRACTULUI</h2>
+    <h4>2.1 Costuri ONE TIME:</h4>
+    <ul>
+        <li>Serviciul 1 (Onboarding & Analiză): 400 EUR + TVA</li>
+        <li>Serviciul 3 (Setup Automatizare Social Media): 1.800 EUR + TVA</li>
+    </ul>
+    <p><strong>TOTAL ONE TIME: 2.200 EUR + TVA (2.618 EUR cu TVA 19%)</strong></p>
+
+    <h4>2.2 Costuri Lunare Recurente:</h4>
+    <ul>
+        <li>Serviciul 2 (Suport Website 3h/lună): 150 EUR + TVA</li>
+        <li>Serviciul 3 (Suport Automatizare): 150 EUR + TVA</li>
+    </ul>
+    <p><strong>TOTAL LUNAR: 300 EUR + TVA (357 EUR cu TVA 19%)</strong></p>
+
+    <h2>Art. 3 - MODALITĂȚI DE PLATĂ</h2>
+    <h4>3.1 Plata serviciilor ONE TIME (2.200 EUR + TVA):</h4>
+    <ul>
+        <li><strong>50% AVANS</strong> la semnarea contractului = 1.100 EUR + TVA (1.309 EUR cu TVA). Termen: 5 zile lucrătoare de la semnare</li>
+        <li><strong>50% LA LIVRARE</strong> confirmată prin email = 1.100 EUR + TVA (1.309 EUR cu TVA). Termen: 14 zile de la data emiterii facturii</li>
+    </ul>
+
+    <h4>3.2 Plata abonamentelor lunare (300 EUR + TVA/lună):</h4>
+    <ul>
+        <li>Se facturează lunar, începând din prima zi a lunii. Termen: 14 zile de la data emiterii facturii</li>
+    </ul>
+
+    <h4>3.3 CONDIȚIE ESENȚIALĂ - ÎNCEPEREA ABONAMENTELOR:</h4>
+    <p>Abonamentele lunare (300 EUR + TVA) încep EXCLUSIV după:</p>
+    <ul>
+        <li>Finalizarea completă a serviciilor ONE TIME</li>
+        <li>Confirmarea prin email de către Client a livrării și recepției serviciilor</li>
+    </ul>
+
+    <h4>3.4 CONT BANCAR ȘI CLAUZĂ DE PLATĂ:</h4>
+    <p><strong>IMPORTANT:</strong> Toate plățile se efectuează EXCLUSIV în contul bancar specificat pe fiecare factură emisă de Prestator. Contul bancar implicit: <strong>RO07 INGB 0000 9999 1228 8357 (ING Bank)</strong>. Clientul este obligat să verifice și să utilizeze contul indicat pe factura curentă.</p>
+
+    <h2>Art. 4 - DURATA CONTRACTULUI</h2>
+    <p>Contractul se încheie pe o perioadă de 12 (douăsprezece) luni, începând de la data semnării.</p>
+
+    <h4>CONDIȚIE DE REZILIERE FLEXIBILĂ:</h4>
+    <p>Contractul poate fi reziliat ORICÂND de oricare dintre părți, cu respectarea următoarelor condiții:</p>
+    <ul>
+        <li>Notificare prealabilă în scris (email acceptat) cu <strong>30 de zile</strong> înainte</li>
+        <li>Email-uri oficiale: Prestator: office@mindloop.ro, Client: <span data-field="field_email">[EMAIL]</span></li>
+    </ul>
+    <p><strong>În perioada de preaviz (30 zile):</strong> Serviciile continuă în regim normal, Facturarea continuă în regim normal, Obligațiile de plată rămân valabile</p>
+    <p><strong>La încetarea contractului:</strong> Clientul păstrează toate configurările, Prestator furnizează 2 ore de training/handover gratuit și documentație completă</p>
+
+    <h2>Art. 5 - OBLIGAȚIILE PRESTATORULUI</h2>
+    <h4>5.1 Pentru Serviciul 1:</h4>
+    <ul>
+        <li>Realizarea auditului complet în maxim 14 zile de la primirea avansului</li>
+        <li>Livrarea raportului detaliat în format digital</li>
+        <li>Prezentare online a rezultatelor (1 sesiune)</li>
+    </ul>
+    <h4>5.2 Pentru Serviciul 2:</h4>
+    <ul>
+        <li>Alocarea a 3 ore/lună pentru mentenanță și dezvoltare</li>
+        <li>Răspuns la solicitări în maximum 24 ore lucrătoare</li>
+        <li>Raport lunar de activitate până în data de 5 a lunii următoare</li>
+    </ul>
+    <h4>5.3 Pentru Serviciul 3:</h4>
+    <ul>
+        <li>Configurare sistem complet în maxim 30 zile de la primirea avansului</li>
+        <li>Training pentru utilizare sistem (2 sesiuni online)</li>
+        <li>Monitorizare și optimizare continuă</li>
+    </ul>
+
+    <h2>Art. 6 - OBLIGAȚIILE CLIENTULUI</h2>
+    <ul>
+        <li>6.1 Furnizarea accesurilor necesare pentru website</li>
+        <li>6.2 Furnizarea informațiilor despre brand, servicii, proiecte</li>
+        <li>6.3 Aprobarea postărilor social media (când este cazul)</li>
+        <li>6.4 Plata la termen a facturilor emise</li>
+        <li>6.5 Notificarea promptă în caz de probleme tehnice</li>
+    </ul>
+
+    <h2>Art. 7 - PROPRIETATE INTELECTUALĂ</h2>
+    <ul>
+        <li>7.1 Toate configurările devin proprietatea Clientului după plata integrală</li>
+        <li>7.2 Prestator păstrează dreptul de a utiliza proiectul în portofoliu (cu acordul Client)</li>
+        <li>7.3 Codul sursă și documentația tehnică sunt transmise Clientului la finalizare</li>
+    </ul>
+
+    <h2>Art. 8 - CONFIDENȚIALITATE</h2>
+    <ul>
+        <li>8.1 Ambele părți păstrează confidențialitatea informațiilor</li>
+        <li>8.2 Obligația rămâne valabilă după încetarea contractului</li>
+        <li>8.3 Datele clientului nu vor fi partajate cu terțe părți fără acord scris</li>
+    </ul>
+
+    <h2>Art. 9 - RĂSPUNDERE ȘI GARANȚII</h2>
+    <ul>
+        <li>9.1 Prestator garantează calitatea serviciilor conform standardelor profesionale</li>
+        <li>9.2 Prestator nu răspunde pentru pierderi indirecte sau profit nerealizat</li>
+        <li>9.3 Răspunderea Prestatorului este limitată la valoarea contractului pe ultimele 3 luni</li>
+    </ul>
+
+    <h2>Art. 10 - FORȚĂ MAJORĂ</h2>
+    <ul>
+        <li>10.1 Nicio parte nu răspunde pentru neîndeplinirea obligațiilor din cauza forței majore</li>
+        <li>10.2 Partea care invocă forța majoră notifică cealaltă parte în 5 zile</li>
+        <li>10.3 Dacă forța majoră durează peste 30 zile, oricare parte poate rezilia contractul</li>
+    </ul>
+
+    <h2>Art. 11 - REZILIEREA CONTRACTULUI</h2>
+    <h4>11.1 REZILIERE FLEXIBILĂ - ORICÂND:</h4>
+    <p>Oricare dintre părți poate rezilia contractul în orice moment, cu preaviz de 30 de zile în scris.</p>
+    <h4>11.2 Reziliere pentru nerespectarea obligațiilor:</h4>
+    <p>În caz de nerespectare gravă, partea prejudiciată poate rezilia cu preaviz de 15 zile, după notificare.</p>
+    <h4>11.3 În caz de reziliere:</h4>
+    <ul>
+        <li>Se finalizează lucrările în curs</li>
+        <li>Se facturează exclusiv serviciile efectiv prestate</li>
+        <li>Se returnează toate accesurile și documentația</li>
+        <li>Clientul achită toate facturile restante în 14 zile</li>
+    </ul>
+
+    <h2>Art. 12 - MODIFICĂRI CONTRACT</h2>
+    <ul>
+        <li>12.1 Orice modificare se face prin act adițional în scris, semnat de ambele părți</li>
+        <li>12.2 Prestator poate ajusta prețurile serviciilor lunare cu preaviz de 60 zile</li>
+    </ul>
+
+    <h2>Art. 13 - SOLUȚIONAREA LITIGIILOR</h2>
+    <ul>
+        <li>13.1 Părțile vor încerca rezolvarea amiabilă</li>
+        <li>13.2 În caz de eșec, litigiile vor fi soluționate de instanțele competente din România</li>
+        <li>13.3 Contractul este guvernat de legislația română</li>
+    </ul>
+
+    <h2>Art. 14 - DISPOZIȚII FINALE</h2>
+    <ul>
+        <li>14.1 Contractul se încheie în 2 exemplare originale, câte unul pentru fiecare parte</li>
+        <li>14.2 Anexele fac parte integrantă din contract</li>
+        <li>14.3 Orice comunicare oficială se face în scris (email acceptat)</li>
+        <li>14.4 Contractul intră în vigoare la data semnării de ambele părți</li>
+    </ul>
+
+    <div class="signature-section">
+        <div class="signature-left">
+            <h4>PRESTATOR</h4>
+            <p><strong>AI MINDLOOP SRL</strong></p>
+            <p>Reprezentant legal:<br>Motoi Ionut Dorel, Administrator</p>
+            <p>Semnătură:</p>
+            <div class="signature-box" id="prestator-signature"></div>
+            <p>Data: <span data-field="field_data_contract">[DATA_CONTRACT]</span></p>
+        </div>
+        <div class="signature-right">
+            <h4>CLIENT</h4>
+            <p><strong><span data-field="field_nume_firma">[NUME_FIRMA]</span></strong></p>
+            <p>Reprezentant legal:<br><span data-field="field_reprezentant">[REPREZENTANT]</span>, <span data-field="field_functie">[FUNCTIE]</span></p>
+            <p>Semnătură digitală:</p>
+            <div class="signature-box" id="client-signature"></div>
+            <p>Data: <span data-field="field_data_contract">[DATA_CONTRACT]</span></p>
+        </div>
+    </div>
+
+    <p style="margin-top:20px;"><em><strong>NOTĂ:</strong> Prezentul contract a fost citit, înțeles și acceptat de ambele părți.</em></p>
+</body>
+</html>

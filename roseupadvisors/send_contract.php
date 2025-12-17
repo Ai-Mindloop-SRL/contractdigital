@@ -1,0 +1,275 @@
+<?php
+// ============================================
+// SEND CONTRACT - SIMPLIFIED (EMAIL ONLY)
+// Admin sends only email, client fills everything
+// ============================================
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+session_start();
+
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../config/app.php';
+require_once __DIR__ . '/../config/email.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['site_user_id']) || !isset($_SESSION['site_slug'])) {
+    header('Location: /ro/login.php');
+    exit;
+}
+
+$template_id = isset($_GET['template_id']) ? intval($_GET['template_id']) : 0;
+
+if ($template_id == 0) {
+    die('❌ Template ID invalid');
+}
+
+// Get database connection
+$conn = getDBConnection();
+
+// Get site_id from session
+$site_slug = $_SESSION['site_slug'];
+$stmt = $conn->prepare("SELECT id, site_name FROM sites WHERE site_slug = ?");
+$stmt->bind_param("s", $site_slug);
+$stmt->execute();
+$site_result = $stmt->get_result();
+$site = $site_result->fetch_assoc();
+$site_id = $site['id'];
+$site_name = $site['site_name'];
+$stmt->close();
+
+// Get template data
+$stmt = $conn->prepare("SELECT * FROM contract_templates WHERE id = ? AND site_id = ?");
+$stmt->bind_param("ii", $template_id, $site_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows == 0) {
+    die('❌ Template not found');
+}
+
+$template = $result->fetch_assoc();
+$stmt->close();
+
+// Load template fields for this template
+$stmt = $conn->prepare("
+    SELECT fd.field_name, fd.field_label, fd.field_type, fd.placeholder
+    FROM template_field_mapping tfm
+    JOIN field_definitions fd ON tfm.field_definition_id = fd.id
+    WHERE tfm.template_id = ?
+    ORDER BY tfm.display_order
+");
+$stmt->bind_param("i", $template_id);
+$stmt->execute();
+$fields_result = $stmt->get_result();
+$template_fields = [];
+while ($field = $fields_result->fetch_assoc()) {
+    $template_fields[$field['field_name']] = $field;
+}
+$stmt->close();
+
+// HANDLE FORM SUBMISSION
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    
+    $recipient_email = $_POST['recipient_email'] ?? '';
+    $recipient_name = $_POST['recipient_name'] ?? '';
+    $taxa_membru = $_POST['taxa_membru'] ?? '700';
+    $taxa_inscriere = $_POST['taxa_inscriere'] ?? '250';
+    
+    // Prepare form_data with admin-set values
+    $form_data = [
+        'taxa_membru' => $taxa_membru,
+        'taxa_inscriere' => $taxa_inscriere
+    ];
+    $form_data_json = json_encode($form_data);
+    
+    if (empty($recipient_email)) {
+        die('❌ Email destinatar este obligatoriu');
+    }
+    
+    // Generate unique token
+    $unique_base = $recipient_email . microtime(true) . rand(1000, 9999);
+    $signing_token = md5($unique_base);
+    $unique_token = $signing_token;
+    
+    // Insert contract (status = 'pending' - waiting for client to fill)
+    $stmt = $conn->prepare("INSERT INTO contracts (site_id, template_id, contract_content, signing_token, unique_token, recipient_name, recipient_email, form_data, status, sent_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
+    $stmt->bind_param("iissssss", $site_id, $template_id, $template['template_content'], $signing_token, $unique_token, $recipient_name, $recipient_email, $form_data_json);
+    
+    if (!$stmt->execute()) {
+        die('❌ Eroare la salvarea contractului: ' . $stmt->error);
+    }
+    
+    $contract_id = $stmt->insert_id;
+    $stmt->close();
+    // NOTE: Don't close $conn here - sendContractEmail() needs it!
+    
+    // Send email with fill+sign link
+    $fill_link = BASE_URL . "/" . $site_slug . "/fill_and_sign.php?token=" . $signing_token;
+    
+    $email_subject = "Contract de completat și semnat - " . $template['template_name'];
+    
+    $email_body = "<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #2c3e50; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f9f9f9; }
+        .button { display: inline-block; padding: 15px 40px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; font-size: 18px; }
+        .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h2>📄 Contract de Semnat</h2>
+        </div>
+        <div class='content'>
+            <p>Bună ziua" . ($recipient_name ? ' <strong>' . htmlspecialchars($recipient_name) . '</strong>' : '') . ",</p>
+            
+            <p>Ați primit un contract pentru semnătură electronică:</p>
+            
+            <p><strong>" . htmlspecialchars($template['template_name']) . "</strong></p>
+            
+            <p>Pentru a completa și semna contractul, accesați link-ul de mai jos:</p>
+            
+            <div style='text-align: center;'>
+                <a href='" . $fill_link . "' class='button'>📝 COMPLETEAZĂ ȘI SEMNEAZĂ CONTRACTUL</a>
+            </div>
+            
+            <p style='margin-top: 30px;'><strong>Ce trebuie să faceți:</strong></p>
+            <ol>
+                <li>Click pe butonul de mai sus</li>
+                <li>Completați toate câmpurile necesare</li>
+                <li>Citiți contractul complet</li>
+                <li>Semnați electronic</li>
+            </ol>
+            
+            <p style='color: #e74c3c; margin-top: 20px;'><strong>Atenție:</strong> Acest link este unic și personal. Nu îl trimiteți către alte persoane.</p>
+        </div>
+        <div class='footer'>
+            <p>Cu stimă,<br><strong>" . htmlspecialchars($site_name) . "</strong></p>
+            <hr style='margin: 20px 0;'>
+            <p style='font-size: 11px; color: #999;'>Acesta este un email generat automat. Vă rugăm să nu răspundeți la acest mesaj.</p>
+        </div>
+    </div>
+</body>
+</html>";
+    
+    // Send email using sendContractEmail function
+    $email_sent = sendContractEmail($site_slug, $recipient_email, $email_subject, $email_body);
+    
+    // Update contract status to 'sent' after successful email
+    if ($email_sent) {
+        $stmt = $conn->prepare("UPDATE contracts SET status = 'sent' WHERE id = ?");
+        $stmt->bind_param("i", $contract_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+    
+    // Close connection after email is sent
+    $conn->close();
+    // Display success/error message
+    echo "<!DOCTYPE html><html lang='ro'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Contract Trimis</title>";
+    echo "<style>body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f5f5;padding:20px;}.container{max-width:600px;margin:50px auto;background:white;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);padding:40px;text-align:center;}h2{margin-bottom:20px;}p{margin:15px 0;font-size:16px;line-height:1.6;}.success{color:#27ae60;}.error{color:#e74c3c;}.back-link{display:inline-block;margin-top:30px;padding:12px 30px;background:#3498db;color:white;text-decoration:none;border-radius:5px;}.back-link:hover{background:#2980b9;}</style></head><body><div class='container'>";
+    
+    if ($email_sent) {
+        echo "<h2 class='success'>✅ Link trimis cu succes!</h2>";
+        echo "<p>Email trimis către: <strong>" . htmlspecialchars($recipient_email) . "</strong></p>";
+        if ($recipient_name) {
+            echo "<p>Destinatar: <strong>" . htmlspecialchars($recipient_name) . "</strong></p>";
+        }
+        echo "<p>Clientul va primi un link pentru a completa și semna contractul.</p>";
+        echo "<p style='color:#666;margin-top:25px;'><small>Link-ul este valabil 30 de zile.</small></p>";
+    } else {
+        echo "<h2 class='error'>❌ Eroare la trimiterea email-ului</h2>";
+        echo "<p>Ne pare rău, a apărut o problemă la trimiterea email-ului.</p>";
+        echo "<p>Vă rugăm să încercați din nou.</p>";
+    }
+    
+    echo "<a href='templates.php' class='back-link'>← Înapoi la template-uri</a>";
+    echo "</div></body></html>";
+    exit;
+}
+
+?>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trimite Contract - <?php echo htmlspecialchars($template['template_name']); ?></title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 40px; }
+        h1 { color: #2c3e50; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid #3498db; }
+        .info-box { background: #e8f4f8; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #3498db; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; color: #555; font-weight: 500; }
+        input[type="text"], input[type="email"], input[type="number"] { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px; }
+        input:focus { outline: none; border-color: #3498db; }
+        .required { color: red; }
+        .button-group { text-align: center; margin-top: 30px; }
+        button { background: #27ae60; color: white; padding: 15px 50px; border: none; border-radius: 5px; font-size: 18px; cursor: pointer; }
+        button:hover { background: #229954; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #3498db; text-decoration: none; }
+        .feature-list { list-style: none; padding: 0; }
+        .feature-list li { padding: 8px 0; color: #555; }
+        .feature-list li:before { content: "✓ "; color: #27ae60; font-weight: bold; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📧 Trimite Contract</h1>
+        
+        <div class="info-box">
+            <h3 style="margin-bottom: 10px; color: #2c3e50;">📄 <?php echo htmlspecialchars($template['template_name']); ?></h3>
+            <p style="color: #666; margin-bottom: 15px;">Clientul va primi un link unde poate:</p>
+            <ul class="feature-list">
+                <li>Completa toate datele necesare</li>
+                <li>Citi contractul complet</li>
+                <li>Semna electronic</li>
+            </ul>
+            <p style="color: #666; margin-top: 15px;"><strong>Totul pe o singură pagină!</strong></p>
+        </div>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label>Email Destinatar <span class="required">*</span></label>
+                <input type="email" name="recipient_email" required placeholder="exemplu@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label>Nume Destinatar (opțional)</label>
+                <input type="text" name="recipient_name" placeholder="Ex: Ion Popescu">
+                <small style="color: #666;">Pentru personalizarea email-ului</small>
+            </div>
+            
+            <?php if (isset($template_fields['taxa_membru'])): ?>
+            <div class="form-group">
+                <label><?php echo htmlspecialchars($template_fields['taxa_membru']['field_label']); ?> <span class="required">*</span></label>
+                <input type="number" name="taxa_membru" value="700" required placeholder="<?php echo htmlspecialchars($template_fields['taxa_membru']['placeholder']); ?>">
+                <small style="color: #666;">Taxa anuală de membru în EUR</small>
+            </div>
+            <?php endif; ?>
+            
+            <?php if (isset($template_fields['taxa_inscriere'])): ?>
+            <div class="form-group">
+                <label><?php echo htmlspecialchars($template_fields['taxa_inscriere']['field_label']); ?> <span class="required">*</span></label>
+                <input type="number" name="taxa_inscriere" value="250" required placeholder="<?php echo htmlspecialchars($template_fields['taxa_inscriere']['placeholder']); ?>">
+                <small style="color: #666;">Taxa de înscriere pentru membri noi în EUR</small>
+            </div>
+            <?php endif; ?>
+            
+            <div class="button-group">
+                <button type="submit">📤 TRIMITE LINK</button>
+            </div>
+        </form>
+        
+        <a href="templates.php" class="back-link">← Înapoi la template-uri</a>
+    </div>
+</body>
+</html>
