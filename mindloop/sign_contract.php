@@ -87,6 +87,78 @@ $pdf_content = $pdf_obj->Output('', 'S');
         $stmt->execute();
         $stmt->close();
         
+        // NIVEL 1 (SES+): Insert signature data with consent and device info
+        $consent_read = isset($_POST['consent_read']) && $_POST['consent_read'] == 'on' ? 1 : 0;
+        $consent_sign = isset($_POST['consent_sign']) && $_POST['consent_sign'] == 'on' ? 1 : 0;
+        $consent_gdpr = isset($_POST['consent_gdpr']) && $_POST['consent_gdpr'] == 'on' ? 1 : 0;
+        $consent_given = ($consent_read && $consent_sign && $consent_gdpr) ? 1 : 0;
+        
+        $contract_hash = isset($_POST['contract_hash']) ? $_POST['contract_hash'] : null;
+        $user_agent = isset($_POST['user_agent']) ? $_POST['user_agent'] : $_SERVER['HTTP_USER_AGENT'];
+        $screen_resolution = isset($_POST['screen_resolution']) ? $_POST['screen_resolution'] : null;
+        $timezone = isset($_POST['timezone']) ? $_POST['timezone'] : null;
+        $device_type = isset($_POST['device_type']) ? $_POST['device_type'] : null;
+        
+        // Get client IP
+        $consent_ip = $_SERVER['REMOTE_ADDR'];
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $consent_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            $consent_ip = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        
+        // Parse user agent into JSON (browser, OS, device)
+        $ua_parsed = json_encode([
+            'raw' => $user_agent,
+            'browser' => 'Unknown',
+            'os' => 'Unknown',
+            'device' => $device_type ?: 'Unknown'
+        ]);
+        
+        // Calculate PDF hash (SHA-256)
+        $pdf_hash_after = hash('sha256', $pdf_content);
+        
+        // Insert into contract_signatures table
+        $stmt_sig = $conn->prepare("
+            INSERT INTO contract_signatures (
+                contract_id, signed_at, ip_address, signature_data,
+                consent_given, consent_timestamp, consent_ip,
+                consent_read, consent_sign, consent_gdpr,
+                contract_hash_before, pdf_hash_after,
+                user_agent, user_agent_parsed,
+                screen_resolution, timezone, device_type
+            ) VALUES (
+                ?, NOW(), ?, ?,
+                ?, NOW(), ?,
+                ?, ?, ?,
+                ?, ?,
+                ?, ?,
+                ?, ?, ?
+            )
+        ");
+        
+        $stmt_sig->bind_param(
+            "issisiiissssss",
+            $contract['id'],              // contract_id
+            $consent_ip,                  // ip_address
+            $signature_data,              // signature_data
+            $consent_given,               // consent_given
+            $consent_ip,                  // consent_ip
+            $consent_read,                // consent_read
+            $consent_sign,                // consent_sign
+            $consent_gdpr,                // consent_gdpr
+            $contract_hash,               // contract_hash_before
+            $pdf_hash_after,              // pdf_hash_after
+            $user_agent,                  // user_agent
+            $ua_parsed,                   // user_agent_parsed (JSON)
+            $screen_resolution,           // screen_resolution
+            $timezone,                    // timezone
+            $device_type                  // device_type
+        );
+        
+        $stmt_sig->execute();
+        $stmt_sig->close();
+        
         // Send email with PDF to client AND office@splm.ro (CC)
         $email_subject = "Contract semnat - Confirmare";
         
