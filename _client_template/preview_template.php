@@ -38,10 +38,18 @@ if (!$template) {
 
 // Fetch all fields for this template
 $stmt = $conn->prepare("
-    SELECT field_name, field_label, field_type, field_group, is_required, default_value
-    FROM template_fields 
-    WHERE template_id = ? 
-    ORDER BY field_group, field_order, field_label
+    SELECT 
+        fd.field_name, 
+        COALESCE(tfm.custom_label, fd.field_label) AS field_label, 
+        fd.field_type, 
+        fd.field_group, 
+        tfm.is_required,
+        COALESCE(tfm.custom_placeholder, fd.placeholder) AS placeholder,
+        tfm.display_order
+    FROM template_field_mapping tfm
+    JOIN field_definitions fd ON tfm.field_definition_id = fd.id
+    WHERE tfm.template_id = ? 
+    ORDER BY fd.field_group, tfm.display_order, fd.field_label
 ");
 $stmt->bind_param("i", $template_id);
 $stmt->execute();
