@@ -295,17 +295,8 @@ $stmt->bind_param('i', $contract['template_id']);
 $stmt->execute();
 $field_definitions = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-// Convert plain placeholders to data-field spans for JavaScript preview
-foreach ($field_definitions as $field) {
-    $field_name = $field['field_name'];
-    // Replace both [field_name] and [FIELD_NAME] (case insensitive)
-    $placeholder_lower = '[' . strtolower($field_name) . ']';
-    $placeholder_upper = '[' . strtoupper($field_name) . ']';
-    $span_replacement = '<span data-field="field_' . $field_name . '">' . $placeholder_lower . '</span>';
-    
-    $template_html = str_replace($placeholder_lower, $span_replacement, $template_html);
-    $template_html = str_replace($placeholder_upper, $span_replacement, $template_html);
-}
+// Template already has data-field spans - no conversion needed!
+// Template structure: <span data-field="field_nume_firma">[nume_firma]</span>
 
 $conn->close();
 ?>
