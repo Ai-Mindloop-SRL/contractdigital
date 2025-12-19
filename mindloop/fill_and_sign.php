@@ -453,6 +453,23 @@ document.getElementById('clear-signature').addEventListener('click',()=>{
 });
 
 document.getElementById('submit-contract').addEventListener('click',()=>{
+    // Validate required fields
+    const requiredFields = document.querySelectorAll('.contract-field[required]');
+    const emptyFields = [];
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            emptyFields.push(field.closest('.form-group').querySelector('label').textContent.replace(' *', ''));
+        }
+    });
+    
+    if (emptyFields.length > 0) {
+        alert('❌ Completați toate câmpurile obligatorii:\n\n' + emptyFields.join('\n'));
+        // Scroll to first empty field
+        const firstEmpty = document.querySelector('.contract-field[required]:invalid, .contract-field[required][value=""]');
+        if (firstEmpty) firstEmpty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+    }
+    
     // NIVEL 1: Validate signature
     if(!hasSignature){alert('❌ Vă rugăm să semnați mai întâi!');return}
     
