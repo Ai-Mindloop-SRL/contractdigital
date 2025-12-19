@@ -13,11 +13,19 @@ Stores multi-tenant site configurations.
 | `name` | VARCHAR(100) | Site name (e.g., "Mindloop") |
 | `admin_email` | VARCHAR(255) | Admin email |
 | `cc_email` | VARCHAR(255) | CC email for notifications |
+| `bcc_email` | VARCHAR(255) | BCC email for notifications |
+| `smtp_host` | VARCHAR(255) | SMTP server host |
+| `smtp_port` | INT | SMTP server port |
+| `smtp_username` | VARCHAR(255) | SMTP authentication username |
+| `smtp_password` | VARCHAR(255) | SMTP authentication password |
+| `smtp_encryption` | VARCHAR(10) | SMTP encryption (tls/ssl) |
 | `primary_color` | VARCHAR(7) | Hex color code |
+| `logo_path` | VARCHAR(255) | Path to site logo |
+| `created_at` | TIMESTAMP | Creation date |
 
 ---
 
-#### **2. `templates`**
+#### **2. `contract_templates`**
 Contract templates.
 
 | Column | Type | Description |
@@ -27,6 +35,7 @@ Contract templates.
 | `name` | VARCHAR(255) | Template name |
 | `content` | LONGTEXT | HTML template content |
 | `created_at` | TIMESTAMP | Creation date |
+| `updated_at` | TIMESTAMP | Last update date |
 
 ---
 
@@ -38,25 +47,32 @@ Reusable field definitions.
 | `id` | INT | Primary key |
 | `field_name` | VARCHAR(100) | Field identifier (e.g., "nume_firma") |
 | `field_label` | VARCHAR(255) | Display label |
-| `field_type` | VARCHAR(50) | input/textarea/select |
-| `is_required` | BOOLEAN | Mandatory field? |
+| `field_type` | VARCHAR(50) | input/textarea/date/email/tel/select |
+| `is_required` | TINYINT(1) | Mandatory field? (0=no, 1=yes) |
 | `placeholder` | VARCHAR(255) | Placeholder text |
+| `default_value` | VARCHAR(255) | Default value for field |
+| `validation_rules` | TEXT | JSON validation rules |
 
-**Available Fields:**
-- `numar_contract` - Contract number
-- `data_contract` - Contract date
-- `nume_firma` - Company name
-- `cui` - Fiscal code (CUI)
-- `reg_com` - Commercial registration number
-- `adresa` - Address
-- `email` - Email address
-- `telefon` - Phone number
-- `cont_bancar` - Bank account (IBAN)
-- `reprezentant` - Legal representative name
-- `functie` - Representative function/position
-- `judet` - County (for RoseUp BNI) ⚡ NEW
-- `taxa_membru` - Member fee (for RoseUp BNI) ⚡ NEW
-- `taxa_inscriere` - Registration fee (for RoseUp BNI) ⚡ NEW
+**Current Fields in Database (11 existing):**
+
+| ID | field_name | field_label | field_type | is_required | placeholder |
+|----|------------|-------------|------------|-------------|-------------|
+| 1 | `numar_contract` | Număr Contract | input | 1 | Ex: ML-2025-0001 |
+| 2 | `data_contract` | Data Contract | date | 1 | - |
+| 3 | `nume_firma` | Nume Firmă | input | 1 | Ex: SC EXEMPLU SRL |
+| 4 | `cui` | CUI | input | 1 | Ex: RO12345678 |
+| 5 | `reg_com` | Reg. Com. | input | 1 | Ex: J40/1234/2025 |
+| 6 | `adresa` | Adresă | textarea | 1 | Adresa completă a firmei |
+| 7 | `email` | Email | email | 1 | email@exemplu.ro |
+| 8 | `telefon` | Telefon | tel | 1 | Ex: 0721234567 |
+| 9 | `cont_bancar` | Cont Bancar (IBAN) | input | 1 | Ex: RO49AAAA1B31007593840000 |
+| 10 | `reprezentant` | Reprezentant Legal | input | 1 | Nume și prenume |
+| 11 | `functie` | Funcție Reprezentant | input | 1 | Ex: Administrator, Director |
+
+**Fields to be Added (via migration 005):**
+- ⚡ `judet` - Județ (County for RoseUp BNI)
+- ⚡ `taxa_membru` - Taxă Membru (Member fee EUR for RoseUp BNI)
+- ⚡ `taxa_inscriere` - Taxă Înscriere (Registration fee EUR for RoseUp BNI)
 
 ---
 
@@ -66,9 +82,10 @@ Maps fields to templates.
 | Column | Type | Description |
 |--------|------|-------------|
 | `id` | INT | Primary key |
-| `template_id` | INT | FK to templates |
+| `template_id` | INT | FK to contract_templates |
 | `field_id` | INT | FK to field_definitions |
 | `display_order` | INT | Field order in form |
+| `created_at` | TIMESTAMP | Mapping creation date |
 
 ---
 
@@ -78,20 +95,22 @@ Individual contract instances.
 | Column | Type | Description |
 |--------|------|-------------|
 | `id` | INT | Primary key |
-| `template_id` | INT | FK to templates |
 | `site_id` | INT | FK to sites |
+| `template_id` | INT | FK to contract_templates |
 | `recipient_name` | VARCHAR(255) | Signer name |
 | `recipient_email` | VARCHAR(255) | Signer email |
 | `recipient_phone` | VARCHAR(20) | Signer phone |
-| `unique_token` | VARCHAR(64) | Unique URL token |
-| `signing_token` | VARCHAR(64) | Signing URL token |
 | `contract_content` | LONGTEXT | Filled contract HTML |
 | `contract_number` | VARCHAR(50) | Sequential number (ML-2025-0001) |
+| `unique_token` | VARCHAR(64) | Unique URL token |
+| `signing_token` | VARCHAR(64) | Signing URL token |
 | `pdf_path` | VARCHAR(255) | Path to generated PDF |
+| `signature_path` | VARCHAR(255) | Path to signature image PNG |
 | `status` | ENUM | draft/sent/signed |
 | `sent_at` | DATETIME | When email was sent |
 | `signed_at` | DATETIME | When contract was signed |
 | `created_at` | TIMESTAMP | Creation date |
+| `updated_at` | TIMESTAMP | Last update date |
 
 ---
 
