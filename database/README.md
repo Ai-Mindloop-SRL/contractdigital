@@ -187,7 +187,7 @@ CREATE INDEX idx_contracts_status ON contracts(status);
 CREATE INDEX idx_contracts_site_id ON contracts(site_id);
 
 -- Optimize template queries
-CREATE INDEX idx_templates_site_id ON templates(site_id);
+CREATE INDEX idx_templates_site_id ON contract_templates(site_id);
 
 -- Optimize signature queries
 CREATE INDEX idx_signatures_contract_id ON contract_signatures(contract_id);
