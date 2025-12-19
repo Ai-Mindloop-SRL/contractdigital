@@ -77,23 +77,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contract_html = preg_replace('/<span data-field="field_numar_contract">[^<]*<\/span>/', '<span data-field="field_numar_contract">' . $numar_contract . '</span>', $contract_html);
     $contract_html = preg_replace('/<span data-field="field_data_contract">[^<]*<\/span>/', '<span data-field="field_data_contract">' . $data_contract . '</span>', $contract_html);
     
-    // Map form fields to template placeholders (CORRECT mapping for RoseUp template)
+    // Map form fields to template placeholders (lowercase for RoseUp template)
     $field_map = [
-        'client_company_name' => 'NUME_COMPANIE',
-        'client_cui' => 'CIF',
-        'client_nr_reg_com' => 'NUMAR_RC',
-        'client_address' => 'SEDIU_COMPANIE',
-        'client_legal_rep_name' => 'NUME_REPREZENTANT',
-        'client_legal_rep_position' => 'FUNCTIE_REPREZENTANT',
-        'client_judet' => 'JUDET',
-        'taxa_membru' => 'TAXA_MEMBRU',
-        'taxa_inscriere' => 'TAXA_INSCRIERE'
+        'client_company_name' => 'nume_firma',
+        'client_cui' => 'cui',
+        'client_nr_reg_com' => 'reg_com',
+        'client_address' => 'adresa',
+        'client_legal_rep_name' => 'reprezentant',
+        'client_legal_rep_position' => 'functie',
+        'client_judet' => 'judet',
+        'taxa_membru' => 'taxa_membru',
+        'taxa_inscriere' => 'taxa_inscriere'
     ];
     
     // Replace all placeholders with POST values
     foreach ($field_map as $db_field => $placeholder) {
         $value = $_POST[$db_field] ?? '';
+        // Replace both lowercase and uppercase versions for compatibility
         $contract_html = str_replace('[' . $placeholder . ']', htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
+        $contract_html = str_replace('[' . strtoupper($placeholder) . ']', htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
     }
     
     // Signatures will be inserted by ContractPDF.php using <span id="prestator-signature"> and <span id="client-signature"> placeholders
