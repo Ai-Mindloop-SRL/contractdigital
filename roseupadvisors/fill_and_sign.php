@@ -77,25 +77,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contract_html = preg_replace('/<span data-field="field_numar_contract">[^<]*<\/span>/', '<span data-field="field_numar_contract">' . $numar_contract . '</span>', $contract_html);
     $contract_html = preg_replace('/<span data-field="field_data_contract">[^<]*<\/span>/', '<span data-field="field_data_contract">' . $data_contract . '</span>', $contract_html);
     
-    // Map form fields to template placeholders (lowercase for RoseUp template)
-    $field_map = [
-        'client_company_name' => 'nume_firma',
-        'client_cui' => 'cui',
-        'client_nr_reg_com' => 'reg_com',
-        'client_address' => 'adresa',
-        'client_legal_rep_name' => 'reprezentant',
-        'client_legal_rep_position' => 'functie',
-        'client_judet' => 'judet',
-        'taxa_membru' => 'taxa_membru',
-        'taxa_inscriere' => 'taxa_inscriere'
-    ];
+    // DIRECT REPLACE - field_name = placeholder (same as Mindloop)
+    // Get field_definitions for this template
+    $field_stmt = $conn->prepare("
+        SELECT fd.field_name 
+        FROM template_field_mapping tfm 
+        JOIN field_definitions fd ON tfm.field_definition_id = fd.id 
+        WHERE tfm.template_id = ?
+    ");
+    $field_stmt->bind_param('i', $contract['template_id']);
+    $field_stmt->execute();
+    $template_fields = $field_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $field_stmt->close();
     
-    // Replace all placeholders with POST values
-    foreach ($field_map as $db_field => $placeholder) {
-        $value = $_POST[$db_field] ?? '';
-        // Replace both lowercase and uppercase versions for compatibility
-        $contract_html = str_replace('[' . $placeholder . ']', htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
-        $contract_html = str_replace('[' . strtoupper($placeholder) . ']', htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
+    // Replace placeholders directly with field_name
+    foreach ($template_fields as $field) {
+        $field_name = $field['field_name'];
+        $placeholder_lower = '[' . $field_name . ']';  // Ex: [nume_firma]
+        $placeholder_upper = '[' . strtoupper($field_name) . ']';  // Ex: [NUME_FIRMA]
+        $value = $_POST[$field_name] ?? '';  // Ex: $_POST['nume_firma']
+        $contract_html = str_replace($placeholder_lower, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
+        $contract_html = str_replace($placeholder_upper, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
     }
     
     // Signatures will be inserted by ContractPDF.php using <span id="prestator-signature"> and <span id="client-signature"> placeholders
