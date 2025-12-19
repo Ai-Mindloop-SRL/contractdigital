@@ -282,26 +282,139 @@ $success = isset($_GET['success']) && $_GET['success'] == 1;
             border: 1px solid #c3e6cb;
         }
         
+        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
             .header {
                 flex-direction: column;
                 text-align: center;
                 gap: 15px;
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
+            
+            .header-actions a {
+                display: block;
+                width: 100%;
+                text-align: center;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
             
-            table {
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-card .number {
+                font-size: 28px;
+            }
+            
+            .stat-card .label {
+                font-size: 11px;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .filter-tabs {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .filter-tabs button {
+                flex: 1;
+                min-width: 80px;
                 font-size: 12px;
+                padding: 6px 10px;
             }
             
-            th, td {
-                padding: 10px;
+            /* Hide table on mobile, show card layout instead */
+            table thead {
+                display: none;
+            }
+            
+            table tbody {
+                display: block;
+            }
+            
+            table tbody tr {
+                display: block;
+                background: white;
+                border: 1px solid #dee2e6;
+                border-radius: 8px;
+                margin-bottom: 15px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            }
+            
+            table tbody tr:hover {
+                background: white;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            }
+            
+            table tbody td {
+                display: block;
+                text-align: left;
+                padding: 8px 0;
+                border: none;
+            }
+            
+            /* Add labels for mobile card view */
+            table tbody td:nth-child(1):before { content: "👤 Destinatar: "; font-weight: 600; color: #666; }
+            table tbody td:nth-child(2):before { content: "📄 Template: "; font-weight: 600; color: #666; }
+            table tbody td:nth-child(3):before { content: "📧 Email: "; font-weight: 600; color: #666; }
+            table tbody td:nth-child(4):before { content: "📊 Status: "; font-weight: 600; color: #666; display: block; margin-bottom: 5px; }
+            table tbody td:nth-child(5):before { content: "📤 Trimis: "; font-weight: 600; color: #666; }
+            table tbody td:nth-child(6):before { content: "✅ Semnat: "; font-weight: 600; color: #666; }
+            table tbody td:nth-child(7):before { content: "🔧 Acțiuni: "; font-weight: 600; color: #666; display: block; margin-bottom: 8px; }
+            
+            table tbody td:nth-child(7) {
+                padding-top: 12px;
+                border-top: 1px solid #eee;
+                margin-top: 8px;
+            }
+            
+            table tbody td:nth-child(7) .action-btn {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 12px;
             }
         }
-    </style>
+        
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .stat-card .number,
+            .stat-card .label {
+                margin: 0;
+            }
+            
+            .filter-tabs button {
+                font-size: 11px;
+                padding: 6px 8px;
+            }
+        }    </style>
 </head>
 <body>
     <div class="container">
