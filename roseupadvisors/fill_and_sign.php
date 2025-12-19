@@ -455,7 +455,7 @@ function draw(e){
     ctx.lineTo(x,y);
     ctx.stroke();
     hasSignature=true;
-    document.getElementById('submit-contract').disabled=false;
+    checkFormValidity();
 }
 function stopDrawing(e){
     if(isDrawing) e.preventDefault();
@@ -472,12 +472,21 @@ canvas.addEventListener('touchstart',startDrawing,{passive:false});
 canvas.addEventListener('touchmove',draw,{passive:false});
 canvas.addEventListener('touchend',stopDrawing,{passive:false});
 
+// NIVEL 1: Function to check form validity (signature + all consents)
+function checkFormValidity() {
+    const consentRead = document.getElementById('consent_read').checked;
+    const consentSign = document.getElementById('consent_sign').checked;
+    const consentGdpr = document.getElementById('consent_gdpr').checked;
+    const allConsentsChecked = consentRead && consentSign && consentGdpr;
+    document.getElementById('submit-contract').disabled = !(hasSignature && allConsentsChecked);
+}
+
 // NIVEL 1: Add consent checkbox listeners
 document.getElementById('consent_read').addEventListener('change', checkFormValidity);
 document.getElementById('consent_sign').addEventListener('change', checkFormValidity);
 document.getElementById('consent_gdpr').addEventListener('change', checkFormValidity);
 
-document.getElementById('clear-signature').addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);hasSignature=false;document.getElementById('submit-contract').disabled=true});
+document.getElementById('clear-signature').addEventListener('click',()=>{ctx.clearRect(0,0,canvas.width,canvas.height);hasSignature=false;checkFormValidity();});
 
 document.getElementById('submit-contract').addEventListener('click',()=>{
 // Validare: verifică dacă toate câmpurile obligatorii sunt completate
