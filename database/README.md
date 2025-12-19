@@ -42,6 +42,22 @@ Reusable field definitions.
 | `is_required` | BOOLEAN | Mandatory field? |
 | `placeholder` | VARCHAR(255) | Placeholder text |
 
+**Available Fields:**
+- `numar_contract` - Contract number
+- `data_contract` - Contract date
+- `nume_firma` - Company name
+- `cui` - Fiscal code (CUI)
+- `reg_com` - Commercial registration number
+- `adresa` - Address
+- `email` - Email address
+- `telefon` - Phone number
+- `cont_bancar` - Bank account (IBAN)
+- `reprezentant` - Legal representative name
+- `functie` - Representative function/position
+- `judet` - County (for RoseUp BNI) ⚡ NEW
+- `taxa_membru` - Member fee (for RoseUp BNI) ⚡ NEW
+- `taxa_inscriere` - Registration fee (for RoseUp BNI) ⚡ NEW
+
 ---
 
 #### **4. `template_field_mapping`**
@@ -124,6 +140,7 @@ mysql -u user -p contractdigital_ro < database/migrations/003_nivel1_ses_plus.sq
 | `001_initial_schema.sql` | 2024-11-15 | Initial database structure |
 | `002_add_signatures.sql` | 2024-12-04 | Added signature tracking |
 | `003_nivel1_ses_plus.sql` | 2024-12-17 | Nivel 1 - SES+ fields |
+| `005_add_roseup_fields.sql` | 2025-12-19 | RoseUp BNI fields (judet, taxa_membru, taxa_inscriere) |
 
 ---
 
@@ -214,4 +231,4 @@ WHERE c.id = 64;
 
 ---
 
-**Last Updated:** December 17, 2024
+**Last Updated:** December 19, 2025
