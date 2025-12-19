@@ -349,7 +349,7 @@ textarea{min-height:80px;resize:vertical}
 <?php 
 // No field mapping needed - use field_name directly to match template data-field attributes
 foreach($field_definitions as $field): 
-$data_field = $field['field_name']; // Direct mapping: field_name = data-field in template
+$data_field = 'field_' . $field['field_name']; // Prefix with 'field_' to match template spans
 // Check if admin preset this field (e.g., taxa_membru, taxa_inscriere)
 $preset_value = $admin_data[$field['field_name']] ?? '';
 // Check if this field is admin-only (can't be modified by client)
