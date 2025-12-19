@@ -60,85 +60,28 @@ while ($field = $fields_result->fetch_assoc()) {
 }
 $stmt->close();
 
-// Generate sample data based on field types
-$sample_data = [];
-foreach ($fields as $field) {
-    $field_name = $field['field_name'];
-    // Keep original case from database
-    $clean_name = str_replace('field_', '', $field_name);
-    
-    // Use default value if exists
-    if (!empty($field['default_value'])) {
-        $sample_data[$clean_name] = $field['default_value'];
-        continue;
-    }
-    
-    // Simple pattern matching for common fields
-    if (stripos($clean_name, 'DATA') !== false || stripos($clean_name, 'DATE') !== false) {
-        $sample_data[$clean_name] = date('d.m.Y');
-    } elseif (stripos($clean_name, 'EMAIL') !== false) {
-        $sample_data[$clean_name] = 'exemplu@email.ro';
-    } elseif (stripos($clean_name, 'TELEFON') !== false || stripos($clean_name, 'PHONE') !== false) {
-        $sample_data[$clean_name] = '0740123456';
-    } elseif (stripos($clean_name, 'NUME') !== false || stripos($clean_name, 'NAME') !== false) {
-        $sample_data[$clean_name] = 'Popescu Ion';
-    } elseif (stripos($clean_name, 'ADRESA') !== false || stripos($clean_name, 'ADDRESS') !== false) {
-        $sample_data[$clean_name] = 'Str. Exemplu nr. 1, București';
-    } elseif (stripos($clean_name, 'CUI') !== false) {
-        $sample_data[$clean_name] = 'RO12345678';
-    } elseif (stripos($clean_name, 'CONT') !== false || stripos($clean_name, 'IBAN') !== false) {
-        $sample_data[$clean_name] = 'RO49AAAA1B31007593840000';
-    } elseif (stripos($clean_name, 'REPREZENTANT') !== false || stripos($clean_name, 'REP') !== false) {
-        $sample_data[$clean_name] = 'Director General';
-    } else {
-        // Generic fallback
-        $sample_data[$clean_name] = '[' . $clean_name . ']';
-    }
-}
-// Web preview mode
+// Web preview mode - just highlight placeholders, don't replace with test data
 $preview_content = $template['template_content'];
 
-// Replace placeholders with highlighted sample data
-foreach ($sample_data as $field_name => $field_value) {
-    // Remove field_ prefix if exists for matching
-    $clean_field_name = str_replace('field_', '', $field_name);
-    // Support both uppercase and lowercase placeholders
-    $placeholder_upper = '[' . strtoupper($clean_field_name) . ']';
-    $placeholder_lower = '[' . strtolower($clean_field_name) . ']';
-    
-    $replacement = '<span class="filled-field" data-field="' . htmlspecialchars($clean_field_name) . '" title="' . htmlspecialchars($clean_field_name . ': ' . $field_value) . '">' 
-        . htmlspecialchars($field_value) . '</span>';
-    
-    // Replace both uppercase and lowercase versions
-    $preview_content = str_replace($placeholder_upper, $replacement, $preview_content);
-    $preview_content = str_replace($placeholder_lower, $replacement, $preview_content);
-}
-
-// Highlight any remaining unfilled placeholders (support both upper and lowercase)
+// Highlight all placeholders (support both upper and lowercase)
 $preview_content = preg_replace_callback(
     '/\[([A-Za-z_0-9]+)\]/',
     function($matches) {
-        return '<span class="unfilled-field" data-field="' . htmlspecialchars($matches[1]) . '" title="Câmp lipsă: ' . htmlspecialchars($matches[1]) . '">' . htmlspecialchars($matches[0]) . '</span>';
+        return '<span class="filled-field" data-field="' . htmlspecialchars($matches[1]) . '" title="Placeholder: ' . htmlspecialchars($matches[1]) . '">[' . htmlspecialchars($matches[1]) . ']</span>';
     },
     $preview_content
 );
 
 // Count fields
-// 1. Unique fields (distinct field names from preview content)
+// 1. Unique fields (distinct field names from template)
 preg_match_all('/\[([A-Za-z_0-9]+)\]/', $template['template_content'], $template_placeholders);
 $unique_fields = count(array_unique($template_placeholders[1]));
 
 // 2. Total placeholders (total occurrences in template)
-// Count ALL placeholder occurrences (including repeats)
 preg_match_all('/\[([A-Za-z_0-9]+)\]/', $template['template_content'], $all_occurrences);
 $total_placeholders = count($all_occurrences[0]);
 
-// 3. Count unfilled placeholders (unique)
-preg_match_all('/<span class="unfilled-field" data-field="([^"]+)"/', $preview_content, $unfilled_matches);
-$unfilled_count = count(array_unique($unfilled_matches[1]));
-
 // For display
-$filled_count = $total_placeholders - $unfilled_count;
 $total_fields = $unique_fields;
 
 ?>
@@ -376,38 +319,18 @@ $total_fields = $unique_fields;
         }
         
         .preview-content .filled-field {
-            background: linear-gradient(120deg, #e8f5e9 0%, #c8e6c9 100%);
+            background: linear-gradient(120deg, #e3f2fd 0%, #bbdefb 100%);
             padding: 2px 6px;
             border-radius: 3px;
             font-weight: 600;
-            color: #1b5e20;
+            color: #0d47a1;
             cursor: help;
             transition: all 0.2s ease;
+            border: 1px solid #2196F3;
         }
         
         .preview-content .filled-field:hover {
-            background: #a5d6a7;
-            transform: scale(1.05);
-        }
-        
-        .preview-content .unfilled-field {
-            background: linear-gradient(120deg, #fff9c4 0%, #fff59d 100%);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: 600;
-            color: #f57f17;
-            cursor: help;
-            border: 1px dashed #fbc02d;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .preview-content .unfilled-field:hover {
-            background: #ffeb3b;
+            background: #90caf9;
             transform: scale(1.05);
         }
         
@@ -691,18 +614,6 @@ $total_fields = $unique_fields;
 
     </div>
     
-    <!-- Legend -->
-    <div class="legend">
-        <strong>Legendă:</strong>
-        <div class="legend-item">
-            <span class="legend-badge filled">Date de test</span>
-            <span>Câmpuri înlocuite cu valori de test</span>
-        </div>
-        <div class="legend-item">
-            <span class="legend-badge unfilled">[CAMP_LIPSA]</span>
-            <span>Placeholders care trebuie adăugate în template</span>
-        </div>
-    </div>
     
     <!-- Preview Content -->
     <div class="preview-container">
@@ -711,12 +622,6 @@ $total_fields = $unique_fields;
         </div>
     </div>
     
-    <script>
-        // Count unfilled fields
-        document.addEventListener('DOMContentLoaded', function() {
-            const unfilledCount = document.querySelectorAll('.unfilled-field').length;
-            document.getElementById('unfilled-count').textContent = unfilledCount;
-        });
-    </script>
+
 </body>
 </html>
