@@ -329,11 +329,11 @@ foreach($field_definitions as $field):
 $data_field = $field_map[$field['field_name']] ?? 'field_' . $field['field_name'];
 ?>
 <div class="form-group">
-<label><?=$field['field_label']?> <span style="color: red;">*</span></label>
+<label><?=$field['field_label']?><?=!$field['is_required']?' (opțional)':' *'?></label>
 <?php if($field['field_type']=='textarea'): ?>
-<textarea name="<?=$field['field_name']?>" required class="contract-field" data-field="<?=$data_field?>"><?=$field['field_name']??''?></textarea>
+<textarea name="<?=$field['field_name']?>" <?=!$field['is_required']?'':'required'?> class="contract-field" data-field="<?=$data_field?>"><?=$field['field_name']??''?></textarea>
 <?php else: ?>
-<input type="<?=$field['field_type']?>" name="<?=$field['field_name']?>" placeholder="<?=$field['placeholder']??''?>" value="" required class="contract-field" data-field="<?=$data_field?>">
+<input type="<?=$field['field_type']?>" name="<?=$field['field_name']?>" placeholder="<?=$field['placeholder']??''?>" value="" <?=!$field['is_required']?'':'required'?> class="contract-field" data-field="<?=$data_field?>">
 <?php endif; ?>
 </div>
 <?php endforeach; ?>
