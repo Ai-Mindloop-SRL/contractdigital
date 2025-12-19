@@ -560,7 +560,7 @@ updatePreview();
 
 // CUI Lookup functionality
 document.getElementById('cuiLookupBtn').addEventListener('click', async function() {
-    const cuiInput = document.querySelector('[name="client_cui"]');
+    const cuiInput = document.querySelector('[name="cui"]');
     if (!cuiInput) {
         alert('Câmp CUI nu găsit!');
         return;
@@ -593,13 +593,13 @@ document.getElementById('cuiLookupBtn').addEventListener('click', async function
             throw new Error(data.error || 'Eroare la căutare');
         }
         
-        // Fill fields
+        // Fill fields with correct field names (no 'client_' prefix)
         const fieldMap = {
-            'client_company_name': data.denumire,
-            'client_cui': data.cui,
-            'client_nr_reg_com': data.numar_reg_com,
-            'client_address': data.adresa,
-            'client_phone': data.telefon
+            'nume_firma': data.denumire,
+            'cui': data.cui,
+            'reg_com': data.numar_reg_com,
+            'adresa': data.adresa,
+            'telefon': data.telefon
         };
         
         for (const [fieldName, value] of Object.entries(fieldMap)) {
