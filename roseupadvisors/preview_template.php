@@ -64,7 +64,8 @@ $stmt->close();
 $sample_data = [];
 foreach ($fields as $field) {
     $field_name = $field['field_name'];
-    $clean_name = strtoupper(str_replace('field_', '', $field_name));
+    // Keep original case from database
+    $clean_name = str_replace('field_', '', $field_name);
     
     // Use default value if exists
     if (!empty($field['default_value'])) {
@@ -101,19 +102,21 @@ $preview_content = $template['template_content'];
 foreach ($sample_data as $field_name => $field_value) {
     // Remove field_ prefix if exists for matching
     $clean_field_name = str_replace('field_', '', $field_name);
-    $placeholder = '[' . strtoupper($clean_field_name) . ']';
+    // Support both uppercase and lowercase placeholders
+    $placeholder_upper = '[' . strtoupper($clean_field_name) . ']';
+    $placeholder_lower = '[' . strtolower($clean_field_name) . ']';
     
-    $preview_content = str_replace(
-        $placeholder,
-        '<span class="filled-field" data-field="' . htmlspecialchars(strtoupper($clean_field_name)) . '" title="' . htmlspecialchars(strtoupper($clean_field_name) . ': ' . $field_value) . '">' 
-        . htmlspecialchars($field_value) . '</span>',
-        $preview_content
-    );
+    $replacement = '<span class="filled-field" data-field="' . htmlspecialchars($clean_field_name) . '" title="' . htmlspecialchars($clean_field_name . ': ' . $field_value) . '">' 
+        . htmlspecialchars($field_value) . '</span>';
+    
+    // Replace both uppercase and lowercase versions
+    $preview_content = str_replace($placeholder_upper, $replacement, $preview_content);
+    $preview_content = str_replace($placeholder_lower, $replacement, $preview_content);
 }
 
-// Highlight any remaining unfilled placeholders
+// Highlight any remaining unfilled placeholders (support both upper and lowercase)
 $preview_content = preg_replace_callback(
-    '/\[([A-Z_0-9]+)\]/',
+    '/\[([A-Za-z_0-9]+)\]/',
     function($matches) {
         return '<span class="unfilled-field" data-field="' . htmlspecialchars($matches[1]) . '" title="Câmp lipsă: ' . htmlspecialchars($matches[1]) . '">' . htmlspecialchars($matches[0]) . '</span>';
     },
@@ -122,12 +125,12 @@ $preview_content = preg_replace_callback(
 
 // Count fields
 // 1. Unique fields (distinct field names from preview content)
-preg_match_all('/\[([A-Z_0-9]+)\]/', $template['template_content'], $template_placeholders);
+preg_match_all('/\[([A-Za-z_0-9]+)\]/', $template['template_content'], $template_placeholders);
 $unique_fields = count(array_unique($template_placeholders[1]));
 
 // 2. Total placeholders (total occurrences in template)
 // Count ALL placeholder occurrences (including repeats)
-preg_match_all('/\[([A-Z_0-9]+)\]/', $template['template_content'], $all_occurrences);
+preg_match_all('/\[([A-Za-z_0-9]+)\]/', $template['template_content'], $all_occurrences);
 $total_placeholders = count($all_occurrences[0]);
 
 // 3. Count unfilled placeholders (unique)
