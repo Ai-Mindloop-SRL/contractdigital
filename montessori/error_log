@@ -1,0 +1,314 @@
+[16-Nov-2025 18:13:19 Europe/Bucharest] Warning: Site 'montessori' has no primary_color set, using fallback
+[16-Nov-2025 22:19:24 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to undefined function fetchOne() in /home/r68649site/contractdigital.ro/ro/montessori/login.php:15
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/login.php on line 15
+[16-Nov-2025 22:27:11 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to undefined function fetchAll() in /home/r68649site/contractdigital.ro/ro/montessori/templates.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/templates.php on line 9
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 88
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 88
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 129
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 129
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 146
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 146
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 164
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 164
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 184
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 184
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 228
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 228
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 235
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 235
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 259
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 259
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 265
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 265
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 267
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 267
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 297
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 297
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 301
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 301
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 338
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 338
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 341
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 341
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 344
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 344
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 346
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 346
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 353
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 353
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Undefined variable $SITE in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 442
+[16-Nov-2025 22:32:59 Europe/Bucharest] PHP Warning:  Trying to access array offset on null in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 442
+[16-Nov-2025 22:57:59 Europe/Bucharest] Sending email with CC: office@splm.ro
+[16-Nov-2025 22:57:59 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[16-Nov-2025 22:57:59 Europe/Bucharest] Adding CC: office@splm.ro
+[16-Nov-2025 22:57:59 Europe/Bucharest] Email sent successfully
+[16-Nov-2025 23:21:36 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/view_contract.php on line 34
+[16-Nov-2025 23:21:36 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/view_contract.php on line 385
+[16-Nov-2025 23:24:51 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 358
+[16-Nov-2025 23:28:11 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 358
+[16-Nov-2025 23:32:21 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 358
+[16-Nov-2025 23:32:23 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 358
+[16-Nov-2025 23:33:06 Europe/Bucharest] PHP Fatal error:  Cannot redeclare adjustBrightness() (previously declared in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php:454) in /home/r68649site/contractdigital.ro/ro/includes/helpers.php on line 14
+[16-Nov-2025 23:35:47 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 359
+[16-Nov-2025 23:47:04 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 359
+[16-Nov-2025 23:47:05 Europe/Bucharest] PHP Warning:  Undefined array key "" in /home/r68649site/contractdigital.ro/ro/montessori/contract_detail.php on line 359
+[17-Nov-2025 22:52:50 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Class "ZipArchive" not found in /home/r68649site/contractdigital.ro/ro/montessori/convert_docx_to_template.php:38
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/convert_docx_to_template.php on line 38
+[17-Nov-2025 23:13:15 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'description' in 'field list' in /home/r68649site/contractdigital.ro/ro/montessori/create_template_manual.php:36
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/create_template_manual.php(36): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/create_template_manual.php on line 36
+[17-Nov-2025 23:16:13 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'is_active' in 'field list' in /home/r68649site/contractdigital.ro/ro/montessori/create_template_manual.php:35
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/create_template_manual.php(35): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/create_template_manual.php on line 35
+[17-Nov-2025 23:52:21 Europe/Bucharest] PHP Warning:  require_once(../config/db_connect.php): Failed to open stream: No such file or directory in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php on line 7
+[17-Nov-2025 23:52:21 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Failed opening required '../config/db_connect.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php on line 7
+[18-Nov-2025 00:04:27 Europe/Bucharest] PHP Warning:  require_once(../config/db_connect.php): Failed to open stream: No such file or directory in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php on line 7
+[18-Nov-2025 00:04:27 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Failed opening required '../config/db_connect.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php on line 7
+[18-Nov-2025 00:11:12 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 's.nume' in 'field list' in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php:24
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php(24): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php on line 24
+[18-Nov-2025 00:16:59 Europe/Bucharest] PHP Warning:  Undefined variable $field_label in /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php on line 131
+[18-Nov-2025 00:38:34 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to undefined method TCPDF::SetAutoFont() in /home/r68649site/contractdigital.ro/ro/includes/ContractPDF.php:41
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/preview_template.php(149): ContractPDF->__construct()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/includes/ContractPDF.php on line 41
+[18-Nov-2025 11:33:07 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'is_active' in 'where clause' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:22
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(22): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 22
+[18-Nov-2025 11:36:24 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to undefined function adjustBrightness() in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:170
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 170
+[18-Nov-2025 11:37:00 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to undefined function adjustBrightness() in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:170
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 170
+[18-Nov-2025 11:40:39 Europe/Bucharest] PHP Warning:  require_once(/home/r68649site/contractdigital.ro/ro/montessori/session_start.php): Failed to open stream: No such file or directory in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 11
+[18-Nov-2025 11:40:39 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Failed opening required '/home/r68649site/contractdigital.ro/ro/montessori/session_start.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 11
+[18-Nov-2025 11:54:33 Europe/Bucharest] PHP Warning:  require_once(/home/r68649site/contractdigital.ro/ro/montessori/../config/db_connect.php): Failed to open stream: No such file or directory in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 19
+[18-Nov-2025 11:54:33 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Failed opening required '/home/r68649site/contractdigital.ro/ro/montessori/../config/db_connect.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 19
+[18-Nov-2025 12:21:03 Europe/Bucharest] PHP Warning:  Undefined variable $conn in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 21
+[18-Nov-2025 12:21:03 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 21
+[18-Nov-2025 12:21:34 Europe/Bucharest] PHP Warning:  Undefined variable $conn in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 21
+[18-Nov-2025 12:21:34 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 21
+[18-Nov-2025 12:25:03 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'slug' in 'where clause' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:23
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(23): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 23
+[18-Nov-2025 12:34:23 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'unique_token' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:104
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(104): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 104
+[18-Nov-2025 12:37:02 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'unique_token' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:124
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(124): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 124
+[18-Nov-2025 13:57:51 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'unique_token' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:124
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(124): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 124
+[18-Nov-2025 13:58:26 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '' for key 'unique_token' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:124
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(124): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 124
+[19-Nov-2025 14:51:37 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'display_order' in 'order clause' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:56
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(56): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 56
+[19-Nov-2025 14:51:43 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'display_order' in 'order clause' in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php:56
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php(56): mysqli->prepare()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 56
+[19-Nov-2025 14:54:04 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 245
+[19-Nov-2025 15:13:41 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 244
+[19-Nov-2025 15:15:20 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 244
+[19-Nov-2025 15:17:00 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 244
+[19-Nov-2025 15:18:47 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 244
+[19-Nov-2025 15:19:11 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:19:11 Europe/Bucharest] Email sent successfully
+[19-Nov-2025 15:22:45 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 244
+[19-Nov-2025 15:22:58 Europe/Bucharest] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/r68649site/contractdigital.ro/ro/montessori/send_contract.php on line 244
+[19-Nov-2025 15:25:58 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:25:58 Europe/Bucharest] Email sent successfully
+[19-Nov-2025 15:45:05 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:45:05 Europe/Bucharest] Email sent successfully
+[19-Nov-2025 15:46:20 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:46:20 Europe/Bucharest] Email sent successfully
+[19-Nov-2025 15:47:31 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:47:31 Europe/Bucharest] Email sent successfully
+[19-Nov-2025 15:49:51 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:49:51 Europe/Bucharest] Email sent successfully
+[19-Nov-2025 15:55:35 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:55:35 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[19-Nov-2025 15:59:16 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 15:59:16 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[19-Nov-2025 22:14:09 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[19-Nov-2025 22:14:09 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[20-Nov-2025 10:20:01 Europe/Bucharest] Email Send Attempt - To: ionutmotoi@gmail.com
+[20-Nov-2025 10:20:01 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[20-Nov-2025 20:34:43 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[20-Nov-2025 20:34:43 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[24-Nov-2025 13:45:03 Europe/Bucharest] Email Send Attempt - To: ionutmotoi@gmail.com
+[24-Nov-2025 13:45:03 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:01:46 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:01:47 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:09:37 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:09:38 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:14:30 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:14:30 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:18:39 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:18:39 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:23:14 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:23:14 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:26:49 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:26:49 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:29:57 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:29:57 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:33:38 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:33:38 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 03:40:49 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[25-Nov-2025 03:40:49 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 06:04:09 Europe/Bucharest] Email Send Attempt - To: ionutmotoi@gmail.com
+[25-Nov-2025 06:04:09 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[25-Nov-2025 19:33:14 Europe/Bucharest] Email Send Attempt - To: eduardg.ionescu@yahoo.com
+[25-Nov-2025 19:33:14 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[26-Nov-2025 07:34:24 Europe/Bucharest] Email Send Attempt - To: arinela12@gmail.com
+[26-Nov-2025 07:34:24 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[28-Nov-2025 12:11:22 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Class "TemplateVersioning" not found in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php:514
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 514
+[28-Nov-2025 12:14:19 Europe/Bucharest] PHP Warning:  Undefined variable $conn in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 515
+[28-Nov-2025 12:14:19 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php:106
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php(516): TemplateVersioning->getVersions()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php on line 106
+[28-Nov-2025 12:14:21 Europe/Bucharest] PHP Warning:  Undefined variable $conn in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 515
+[28-Nov-2025 12:14:21 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php:106
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php(516): TemplateVersioning->getVersions()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php on line 106
+[28-Nov-2025 12:14:46 Europe/Bucharest] PHP Warning:  Undefined variable $conn in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 515
+[28-Nov-2025 12:14:46 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php:106
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php(516): TemplateVersioning->getVersions()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php on line 106
+[28-Nov-2025 12:14:47 Europe/Bucharest] PHP Warning:  Undefined variable $conn in /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php on line 515
+[28-Nov-2025 12:14:47 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Call to a member function prepare() on null in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php:106
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/edit_template.php(516): TemplateVersioning->getVersions()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/includes/template_versioning.php on line 106
+[28-Nov-2025 13:33:33 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[28-Nov-2025 13:33:33 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[28-Nov-2025 17:56:22 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[28-Nov-2025 17:56:22 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[28-Nov-2025 22:33:03 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[28-Nov-2025 22:33:03 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[28-Nov-2025 22:38:13 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[28-Nov-2025 22:38:13 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[30-Nov-2025 16:01:37 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[30-Nov-2025 16:01:37 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[30-Nov-2025 16:01:46 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[30-Nov-2025 16:01:46 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[30-Nov-2025 17:58:44 Europe/Bucharest] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`r68649site_contractdigital_db`.`contracts`, CONSTRAINT `fk_contracts_template` FOREIGN KEY (`template_id`) REFERENCES `contract_templates` (`id`) ON UPDATE CASCADE) in /home/r68649site/contractdigital.ro/ro/montessori/templates.php:38
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/templates.php(38): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/templates.php on line 38
+[01-Dec-2025 13:51:59 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[01-Dec-2025 13:51:59 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[01-Dec-2025 14:41:58 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[01-Dec-2025 14:41:58 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[04-Dec-2025 00:14:18 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[04-Dec-2025 00:14:18 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[04-Dec-2025 00:14:32 Europe/Bucharest] PHP Warning:  require_once(/home/r68649site/contractdigital.ro/ro/montessori/config/database.php): Failed to open stream: No such file or directory in /home/r68649site/contractdigital.ro/ro/montessori/fill_and_sign.php on line 10
+[04-Dec-2025 00:14:32 Europe/Bucharest] PHP Fatal error:  Uncaught Error: Failed opening required '/home/r68649site/contractdigital.ro/ro/montessori/config/database.php' (include_path='.:/opt/alt/php83/usr/share/pear:/opt/alt/php83/usr/share/php:/usr/share/pear:/usr/share/php') in /home/r68649site/contractdigital.ro/ro/montessori/fill_and_sign.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/montessori/fill_and_sign.php on line 10
+[04-Dec-2025 00:19:45 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[04-Dec-2025 00:19:45 Europe/Bucharest] Adding CC: office@splm.ro
+[04-Dec-2025 00:19:45 Europe/Bucharest] Added attachment from path: /home/r68649site/contractdigital.ro/ro/montessori/uploads/contracts/contract_36_20251204001945.pdf
+[04-Dec-2025 00:19:45 Europe/Bucharest] Email sent successfully with 1 attachment(s)
+[04-Dec-2025 00:19:45 Europe/Bucharest] Email sent to: office@splm.ro, Result: SUCCESS
+[05-Dec-2025 00:08:29 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[05-Dec-2025 00:08:29 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[07-Dec-2025 18:02:07 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[07-Dec-2025 18:02:07 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[07-Dec-2025 18:49:28 Europe/Bucharest] PHP Parse error:  syntax error, unexpected token "catch", expecting end of file in /home/r68649site/contractdigital.ro/ro/montessori/fill_and_sign.php on line 621
+[07-Dec-2025 18:53:38 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[07-Dec-2025 18:53:39 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[08-Dec-2025 09:13:57 Europe/Bucharest] Email Send Attempt - To: arinela12@gmail.com
+[08-Dec-2025 09:13:57 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[08-Dec-2025 13:15:45 Europe/Bucharest] GDPR DEBUG - Processing: 'DA' (type: string)
+[08-Dec-2025 13:15:45 Europe/Bucharest] GDPR DEBUG - Photo: 'DA' (type: string)
+[08-Dec-2025 13:15:45 Europe/Bucharest] GDPR DEBUG - 8.3/8.4 sections count: 7
+[08-Dec-2025 13:15:45 Europe/Bucharest] GDPR DEBUG - Section [2] contains DA ☐: YES
+[08-Dec-2025 13:15:45 Europe/Bucharest] GDPR DEBUG - Replaced 8.3 with DA ☑
+[08-Dec-2025 13:15:45 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[08-Dec-2025 13:15:45 Europe/Bucharest] Adding CC: office@splm.ro
+[08-Dec-2025 13:15:45 Europe/Bucharest] Added attachment from path: /home/r68649site/contractdigital.ro/ro/montessori/uploads/contracts/contract_54_20251208131545.pdf
+[08-Dec-2025 13:15:45 Europe/Bucharest] Email sent successfully with 1 attachment(s)
+[08-Dec-2025 13:15:45 Europe/Bucharest] Email sent to: office@splm.ro, Result: SUCCESS
+[08-Dec-2025 14:06:42 Europe/Bucharest] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function ContractPDF::generate(), 0 passed in /home/r68649site/contractdigital.ro/ro/montessori/download_pdf.php on line 65 and exactly 1 expected in /home/r68649site/contractdigital.ro/ro/includes/ContractPDF.php:120
+Stack trace:
+#0 /home/r68649site/contractdigital.ro/ro/montessori/download_pdf.php(65): ContractPDF->generate()
+#1 {main}
+  thrown in /home/r68649site/contractdigital.ro/ro/includes/ContractPDF.php on line 120
+[08-Dec-2025 14:12:51 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[08-Dec-2025 14:12:51 Europe/Bucharest] Email sent successfully with 0 attachment(s)
+[08-Dec-2025 14:29:54 Europe/Bucharest] GDPR DEBUG - Processing: 'DA' (type: string)
+[08-Dec-2025 14:29:54 Europe/Bucharest] GDPR DEBUG - Photo: 'DA' (type: string)
+[08-Dec-2025 14:29:54 Europe/Bucharest] GDPR DEBUG - 8.3/8.4 sections count: 1
+[08-Dec-2025 14:29:54 Europe/Bucharest] Email Send Attempt - To: office@splm.ro
+[08-Dec-2025 14:29:54 Europe/Bucharest] Adding CC: office@splm.ro
+[08-Dec-2025 14:29:54 Europe/Bucharest] Added attachment from path: /home/r68649site/contractdigital.ro/ro/montessori/uploads/contracts/contract_57_20251208142954.pdf
+[08-Dec-2025 14:29:54 Europe/Bucharest] Email sent successfully with 1 attachment(s)
+[08-Dec-2025 14:29:54 Europe/Bucharest] Email sent to: office@splm.ro, Result: SUCCESS
+[18-Dec-2025 11:05:12 Europe/Bucharest] Email Send Attempt - To: simonamurarescu@gmail.com
+[18-Dec-2025 11:05:12 Europe/Bucharest] Email sent successfully with 0 attachment(s)
