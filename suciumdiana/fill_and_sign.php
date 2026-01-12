@@ -409,7 +409,7 @@ document.getElementById('cuiLookupBtn').addEventListener('click', async function
     status.textContent = '';
     
     try {
-        const response = await fetch('../cui_lookup.php', {
+        const response = await fetch('/cui_lookup.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({cui: cui})
