@@ -39,16 +39,14 @@ if (!$contract) {
     exit;
 }
 
-// ✅ FIX: Get signature data from contracts.signature_path
+// Get signature data if signed
 $signature_data = null;
-if ($contract['status'] === 'signed' && !empty($contract['signature_path'])) {
-    // Build signature data array from contracts table
-    $signature_data = [
-        'signature_data' => 'https://contractdigital.ro/ro' . $contract['signature_path'],
-        'signer_name' => $contract['recipient_name'],
-        'signed_at' => $contract['signed_at'],
-        'ip_address' => '' // Not stored in contracts table
-    ];
+if ($contract['status'] === 'signed') {
+    $stmt = $db->prepare("SELECT * FROM contract_signatures WHERE contract_id = ?");
+    $stmt->bind_param("i", $contract_id);
+    $stmt->execute();
+    $signature_data = $stmt->get_result()->fetch_assoc();
+    $stmt->close();
 }
 
 $signing_url = fullUrl('/sign/' . $contract['signing_token']);
@@ -323,160 +321,21 @@ $signing_url = fullUrl('/sign/' . $contract['signing_token']);
             color: #333;
         }
         
-        /* Mobile Responsive Styles */
         @media (max-width: 768px) {
-            .container {
-                margin: 10px auto;
-                padding: 0 10px;
-            }
-            
-            .header {
-                padding: 20px;
-                margin-bottom: 20px;
-            }
-            
-            .header h1 {
-                font-size: 20px;
-                margin-bottom: 8px;
-            }
-            
-            .header .breadcrumb {
-                font-size: 12px;
-            }
-            
-            .status-card {
-                padding: 20px;
-            }
-            
-            .status-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .status-header h2 {
-                font-size: 18px;
-            }
-            
-            .status-badge {
-                padding: 8px 16px;
-                font-size: 12px;
-            }
-            
             .info-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .info-item {
-                padding: 12px;
-            }
-            
-            .info-item label {
-                font-size: 11px;
-            }
-            
-            .info-item .value {
-                font-size: 14px;
-                word-break: break-word;
-            }
-            
-            .contract-content {
-                padding: 20px;
-                font-size: 14px;
-            }
-            
-            .contract-content h2 {
-                font-size: 18px;
-            }
-            
-            .signature-section {
-                padding: 20px;
-            }
-            
-            .signature-section h3 {
-                font-size: 16px;
-            }
-            
-            .signature-image {
-                max-width: 100%;
-            }
-            
-            .timeline {
-                padding-left: 30px;
-            }
-            
-            .timeline-item:before {
-                left: -28px;
-            }
-            
-            .timeline-item:after {
-                left: -23px;
-            }
-            
-            .link-box {
-                padding: 15px;
-            }
-            
-            .link-box input {
-                font-size: 12px;
-                padding: 8px;
             }
             
             .action-buttons {
                 flex-direction: column;
-                gap: 10px;
             }
             
             .btn {
                 width: 100%;
                 text-align: center;
-                padding: 14px 20px;
-                font-size: 14px;
             }
         }
-        
-        @media (max-width: 480px) {
-            .container {
-                margin: 5px auto;
-            }
-            
-            .header {
-                padding: 15px;
-                border-radius: 8px;
-            }
-            
-            .header h1 {
-                font-size: 18px;
-            }
-            
-            .status-card,
-            .contract-content,
-            .signature-section {
-                border-radius: 8px;
-            }
-            
-            .contract-content {
-                padding: 15px;
-                line-height: 1.6;
-            }
-            
-            .timeline {
-                padding-left: 25px;
-            }
-            
-            .timeline-item {
-                padding-bottom: 20px;
-            }
-            
-            .timeline-item .time {
-                font-size: 11px;
-            }
-            
-            .timeline-item .event {
-                font-size: 13px;
-            }
-        }    </style>
+    </style>
 </head>
 <body>
     <div class="container">
