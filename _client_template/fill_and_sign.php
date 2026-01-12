@@ -229,6 +229,12 @@ textarea{min-height:80px;resize:vertical}
 <h1>📝 Completare Date</h1>
 <p class="subtitle">Pasul 1: Completați datele</p>
 <div class="auto-save-notice">💾 Datele se salvează automat</div>
+<div style="margin: 15px 0;">
+    <button type="button" id="cuiLookupBtn" class="btn" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53); color: white; font-size: 14px; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 6px rgba(255, 107, 107, 0.3); transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 12px rgba(255, 107, 107, 0.4)'" onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 6px rgba(255, 107, 107, 0.3)'">
+        🔍 Completează din CUI
+    </button>
+    <span id="cuiStatus" style="margin-left: 15px; font-size: 14px;"></span>
+</div>
 <form id="mainForm" method="POST" action="">
 <input type="hidden" name="token" value="<?=$token?>">
 <input type="hidden" name="contract_id" value="<?=$contract['id']?>">
@@ -378,6 +384,70 @@ function loadFormData(){
 formFields.forEach(f=>{
     f.addEventListener('input',()=>{updatePreview();saveFormData()});
     f.addEventListener('change',()=>{updatePreview();saveFormData()});
+});
+
+// CUI Lookup functionality
+document.getElementById('cuiLookupBtn').addEventListener('click', async function() {
+    const cuiInput = document.querySelector('[name="cui"]');
+    if (!cuiInput) {
+        alert('Câmp CUI nu găsit!');
+        return;
+    }
+    
+    const cui = cuiInput.value.trim();
+    if (!cui) {
+        alert('Introduceți CUI-ul mai întâi!');
+        cuiInput.focus();
+        return;
+    }
+    
+    const btn = this;
+    const status = document.getElementById('cuiStatus');
+    
+    btn.disabled = true;
+    btn.textContent = '⏳ Se încarcă...';
+    status.textContent = '';
+    
+    try {
+        const response = await fetch('../cui_lookup.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({cui: cui})
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(data.error || 'Eroare la căutare');
+        }
+        
+        // Fill fields with correct field names
+        const fieldMap = {
+            'nume_firma': data.denumire,
+            'cui': data.cui,
+            'reg_com': data.numar_reg_com,
+            'adresa': data.adresa,
+            'telefon': data.telefon
+        };
+        
+        for (const [fieldName, value] of Object.entries(fieldMap)) {
+            const input = document.querySelector(`[name="${fieldName}"]`);
+            if (input && value) {
+                input.value = value;
+                input.dispatchEvent(new Event('change'));
+            }
+        }
+        
+        status.innerHTML = '<span style="color: #4CAF50;">✔️ Date completate cu succes!</span>';
+        updatePreview();
+        saveFormData();
+        
+    } catch (error) {
+        status.innerHTML = '<span style="color: #f44336;">❌ ' + error.message + '</span>';
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🔍 Completează din CUI';
+    }
 });
 
 loadFormData();
