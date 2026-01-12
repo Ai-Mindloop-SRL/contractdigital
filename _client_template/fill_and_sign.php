@@ -68,24 +68,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die('❌ Eroare la generarea numărului de contract: ' . $e->getMessage());
     }
     $data_contract = date('d.m.Y');
+    $contract_html = str_replace('[numar_contract]', $numar_contract, $contract_html);
     $contract_html = str_replace('[NUMAR_CONTRACT]', $numar_contract, $contract_html);
+    $contract_html = str_replace('[data_contract]', $data_contract, $contract_html);
     $contract_html = str_replace('[DATA_CONTRACT]', $data_contract, $contract_html);
     
-    $field_map = [
-        'client_company_name' => 'NUME_FIRMA',
-        'client_cui' => 'CUI',
-        'client_nr_reg_com' => 'REG_COM',
-        'client_address' => 'ADRESA',
-        'client_email' => 'EMAIL',
-        'client_phone' => 'TELEFON',
-        'client_bank_account' => 'CONT_BANCAR',
-        'client_legal_rep_name' => 'REPREZENTANT',
-        'client_legal_rep_position' => 'FUNCTIE'
-    ];
+    // Also replace data-field spans for preview consistency
+    $contract_html = preg_replace('/<span data-field="field_numar_contract">[^<]*<\/span>/', '<span data-field="field_numar_contract">' . $numar_contract . '</span>', $contract_html);
+    $contract_html = preg_replace('/<span data-field="field_data_contract">[^<]*<\/span>/', '<span data-field="field_data_contract">' . $data_contract . '</span>', $contract_html);
     
-    foreach ($field_map as $db_field => $placeholder) {
-        $value = $_POST[$db_field] ?? '';
-        $contract_html = str_replace('[' . $placeholder . ']', $value, $contract_html);
+    // DIRECT REPLACE - Get field names from DB and replace with POST data
+    $field_stmt = $conn->prepare("
+        SELECT fd.field_name 
+        FROM template_field_mapping tfm 
+        JOIN field_definitions fd ON tfm.field_definition_id = fd.id 
+        WHERE tfm.template_id = ?
+    ");
+    $field_stmt->bind_param('i', $contract['template_id']);
+    $field_stmt->execute();
+    $template_fields = $field_stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    $field_stmt->close();
+    
+    // Replace placeholders directly with field_name
+    foreach ($template_fields as $field) {
+        $field_name = $field['field_name'];
+        $placeholder_lower = '[' . $field_name . ']';  // Ex: [nume_firma]
+        $placeholder_upper = '[' . strtoupper($field_name) . ']';  // Ex: [NUME_FIRMA]
+        $value = $_POST[$field_name] ?? '';  // Ex: $_POST['nume_firma']
+        $contract_html = str_replace($placeholder_lower, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
+        $contract_html = str_replace($placeholder_upper, htmlspecialchars($value, ENT_QUOTES, 'UTF-8'), $contract_html);
     }
     
     // Insert signature in client's signature area (smaller size, inline with signature block)
@@ -93,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $signature_with_timestamp = '<br>' . $signature_html . '<br><small style="color:#4CAF50;">✅ Semnat electronic: ' . date('d.m.Y H:i:s') . '</small>';
     
     // Get client name to find where to insert signature
-    $client_name = htmlspecialchars($_POST['client_legal_rep_name'] ?? '', ENT_QUOTES, 'UTF-8');
+    $client_name = htmlspecialchars($_POST['reprezentant'] ?? '', ENT_QUOTES, 'UTF-8');
     
     // Try to insert after client's name in signature-block or signature-section
     if (!empty($client_name)) {
