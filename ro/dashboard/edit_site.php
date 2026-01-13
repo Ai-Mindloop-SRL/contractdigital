@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn,
                 "UPDATE sites SET site_name = ?, admin_email = ?, logo_path = ?, primary_color = ?, is_active = ? WHERE id = ?",
                 [$site_name, $admin_email, $logo_path, $primary_color, $is_active, $site_id],
-                'sssiii'
+                'ssssii'
             );
             
             if ($affected !== false) {
